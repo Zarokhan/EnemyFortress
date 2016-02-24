@@ -31,12 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectForm));
             this.iplabel = new System.Windows.Forms.Label();
             this.portlabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.IPtextBox = new System.Windows.Forms.TextBox();
+            this.PorttextBox = new System.Windows.Forms.TextBox();
             this.connect_button = new System.Windows.Forms.Button();
             this.cancel_button = new System.Windows.Forms.Button();
             this.aliaslabel = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.AliastextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // iplabel
@@ -49,48 +49,51 @@
             resources.ApplyResources(this.portlabel, "portlabel");
             this.portlabel.Name = "portlabel";
             // 
-            // textBox1
+            // IPtextBox
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
+            resources.ApplyResources(this.IPtextBox, "IPtextBox");
+            this.IPtextBox.Name = "IPtextBox";
             // 
-            // textBox2
+            // PorttextBox
             // 
-            resources.ApplyResources(this.textBox2, "textBox2");
-            this.textBox2.Name = "textBox2";
+            resources.ApplyResources(this.PorttextBox, "PorttextBox");
+            this.PorttextBox.Name = "PorttextBox";
+            this.PorttextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PorttextBox_KeyPress);
             // 
             // connect_button
             // 
             resources.ApplyResources(this.connect_button, "connect_button");
             this.connect_button.Name = "connect_button";
             this.connect_button.UseVisualStyleBackColor = true;
+            this.connect_button.Click += new System.EventHandler(this.connect_button_Click);
             // 
             // cancel_button
             // 
             resources.ApplyResources(this.cancel_button, "cancel_button");
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.UseVisualStyleBackColor = true;
+            this.cancel_button.Click += new System.EventHandler(this.cancel_button_Click);
             // 
             // aliaslabel
             // 
             resources.ApplyResources(this.aliaslabel, "aliaslabel");
             this.aliaslabel.Name = "aliaslabel";
             // 
-            // textBox3
+            // AliastextBox
             // 
-            resources.ApplyResources(this.textBox3, "textBox3");
-            this.textBox3.Name = "textBox3";
+            resources.ApplyResources(this.AliastextBox, "AliastextBox");
+            this.AliastextBox.Name = "AliastextBox";
             // 
             // ConnectForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.AliastextBox);
             this.Controls.Add(this.aliaslabel);
             this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.connect_button);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.PorttextBox);
+            this.Controls.Add(this.IPtextBox);
             this.Controls.Add(this.portlabel);
             this.Controls.Add(this.iplabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -106,11 +109,11 @@
 
         private System.Windows.Forms.Label iplabel;
         private System.Windows.Forms.Label portlabel;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox IPtextBox;
+        private System.Windows.Forms.TextBox PorttextBox;
         private System.Windows.Forms.Button connect_button;
         private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.Label aliaslabel;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox AliastextBox;
     }
 }

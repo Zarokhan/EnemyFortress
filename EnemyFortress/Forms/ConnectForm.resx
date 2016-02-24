@@ -183,46 +183,52 @@
   <data name="&gt;&gt;portlabel.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="IPtextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 32</value>
   </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="IPtextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 20</value>
   </data>
-  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="IPtextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
-    <value>textBox1</value>
+  <data name="IPtextBox.Text" xml:space="preserve">
+    <value>anunrealgroup.ddns.net</value>
   </data>
-  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+  <data name="&gt;&gt;IPtextBox.Name" xml:space="preserve">
+    <value>IPtextBox</value>
+  </data>
+  <data name="&gt;&gt;IPtextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;IPtextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;IPtextBox.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="textBox2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="PorttextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>293, 32</value>
   </data>
-  <data name="textBox2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="PorttextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 20</value>
   </data>
-  <data name="textBox2.TabIndex" type="System.Int32, mscorlib">
+  <data name="PorttextBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;textBox2.Name" xml:space="preserve">
-    <value>textBox2</value>
+  <data name="PorttextBox.Text" xml:space="preserve">
+    <value>55250</value>
   </data>
-  <data name="&gt;&gt;textBox2.Type" xml:space="preserve">
+  <data name="&gt;&gt;PorttextBox.Name" xml:space="preserve">
+    <value>PorttextBox</value>
+  </data>
+  <data name="&gt;&gt;PorttextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;textBox2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;PorttextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;textBox2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PorttextBox.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="connect_button.Location" type="System.Drawing.Point, System.Drawing">
@@ -309,25 +315,25 @@
   <data name="&gt;&gt;aliaslabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="textBox3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="AliastextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 67</value>
   </data>
-  <data name="textBox3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="AliastextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 20</value>
   </data>
-  <data name="textBox3.TabIndex" type="System.Int32, mscorlib">
+  <data name="AliastextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;textBox3.Name" xml:space="preserve">
-    <value>textBox3</value>
+  <data name="&gt;&gt;AliastextBox.Name" xml:space="preserve">
+    <value>AliastextBox</value>
   </data>
-  <data name="&gt;&gt;textBox3.Type" xml:space="preserve">
+  <data name="&gt;&gt;AliastextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;textBox3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;AliastextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;textBox3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;AliastextBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

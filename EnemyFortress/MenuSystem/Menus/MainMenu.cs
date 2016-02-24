@@ -1,8 +1,10 @@
 ﻿using EnemyFortress.Forms;
 using EnemyFortress.MenuSystem.Base;
+using EnemyFortress.Networking;
 using EnemyFortress.Scenes;
 using EnemyFortress.SceneSystem.Base;
 using System;
+using System.Windows.Forms;
 
 namespace EnemyFortress.MenuSystem.Menus
 {
@@ -17,9 +19,15 @@ namespace EnemyFortress.MenuSystem.Menus
 
         void OnPlayClicked(object o, EventArgs e)
         {
-            SceneManager.RemoveScene(this);
-            new ConnectForm().ShowDialog();
-            AddScene(new GameScene());
+            ConnectForm form = new ConnectForm();
+            DialogResult result = form.ShowDialog();
+
+            if (result == DialogResult.Cancel)
+                return;
+
+            Client client = new Client(form);
+
+            AddScene(new GameScene(client));
         }
 
         void OnExitClicked(object o, EventArgs e)
