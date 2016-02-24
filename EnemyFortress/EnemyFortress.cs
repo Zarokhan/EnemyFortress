@@ -1,4 +1,5 @@
-﻿using EnemyFortress.MenuSystem.Menus;
+﻿using System;
+using EnemyFortress.MenuSystem.Menus;
 using EnemyFortress.SceneSystem.Base;
 using EnemyFortress.Utilities;
 using Microsoft.Xna.Framework;
@@ -73,6 +74,11 @@ namespace EnemyFortress
             GraphicsDevice.Clear(Color.CornflowerBlue);
             SceneManager.Draw();
             base.Draw(gameTime);
+        }
+
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            base.OnExiting(sender, args);
         }
     }
 }

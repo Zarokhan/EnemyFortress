@@ -43,6 +43,8 @@ namespace EnemyFortress.SceneSystem.Base
 
         public virtual void Draw() { }
 
+        public virtual void OnExiting() { }
+
         protected void AddScene(Scene scene, bool isPopup = false)
         {
             if (!isPopup)

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using EnemyFortress.Utilities;
 using System.Collections.Generic;
+using EnemyFortress.Scenes;
 
 namespace EnemyFortress.SceneSystem.Base
 {
@@ -80,6 +81,15 @@ namespace EnemyFortress.SceneSystem.Base
         public static void RemoveScene(Scene scene)
         {
             scenes.Remove(scene);
+        }
+
+        public static void OnExiting()
+        {
+            for(int i = 0; i < scenes.Count; i++)
+            {
+                if(scenes[i] is GameScene)
+                    scenes[i].OnExiting();
+            }
         }
     }
 }

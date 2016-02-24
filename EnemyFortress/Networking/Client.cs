@@ -38,6 +38,7 @@ namespace EnemyFortress.Networking
             Port = form.Port;
             Alias = form.Alias;
             myLock = new object();
+            IsConnected = true;
         }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace EnemyFortress.Networking
             }
             catch (Exception ex)
             {
+                IsConnected = false;
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
