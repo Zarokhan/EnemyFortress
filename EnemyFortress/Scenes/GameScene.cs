@@ -26,6 +26,7 @@ namespace EnemyFortress.Scenes
         {
             if (!client.IsConnected)
             {
+                client.Disconnect();
                 SceneManager.RemoveScene(this);
                 SceneManager.AddScene(new MenuSystem.Menus.MainMenu());
             }
@@ -44,9 +45,7 @@ namespace EnemyFortress.Scenes
 
         public override void OnExiting()
         {
-            client.IsConnected = false;
-            while(listenerThread.IsAlive)
-                Application.DoEvents();
+            client.Disconnect();
         }
     }
 }

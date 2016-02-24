@@ -68,10 +68,13 @@ namespace EnemyFortress.Networking
 
             while (IsConnected && client.Connected)
             {
-                lock (myLock)
-                {
+                //lock (myLock) // Behöver låset vara här?
+                //{
                     try
                     {
+                        if (!reader.BaseStream.CanRead)
+                            continue;
+
                         string msg = reader.ReadString();
                         if (msg.Contains(Commands.KEY))
                             HandleCommand(msg);
@@ -84,11 +87,10 @@ namespace EnemyFortress.Networking
                     {
                         IsConnected = false;
                     }
-                }
+                //}
             }
 
-            if (client.Connected)
-                Disconnect();
+            Disconnect();
 
             Console.WriteLine("Disconnected from server");
         }

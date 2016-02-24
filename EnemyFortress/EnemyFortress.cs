@@ -78,6 +78,7 @@ namespace EnemyFortress
 
         protected override void OnExiting(object sender, EventArgs args)
         {
+            SceneManager.OnExiting();
             base.OnExiting(sender, args);
         }
     }
