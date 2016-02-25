@@ -6,12 +6,19 @@
     public enum Command
     {
         Connecting,
-        Disconnecting
+        Disconnecting,
+        SendID,         // Server to client, send ID to client
+        SendClient,    // Server to client, sends a client to another client
+        RemoveClient,
+        Spawn
     }
 
-    public enum GameCommand
+    public enum Moving
     {
-        Position
+        Up,
+        Down,
+        Left,
+        Right
     }
 
     /// <summary>
@@ -22,8 +29,7 @@
         /// <summary>
         /// Super private key.
         /// </summary>
-        public const string KEY = "[RASB_SERVER::COMMAND]";
-        public const string GAME_KEY = "[RASB_SERVER::GAME]";
+        public const string KEY = "[RASB_SERVER::COMMAND]";     // General commands key
 
         /// <summary>
         /// Returns a string with key + parameters.

@@ -14,8 +14,8 @@ namespace EnemyFortress.MenuSystem.Base
     /// </summary>
     public class MenuEntry
     {
-        public float Width { get { return AssetManager.Font.MeasureString(title).X; } }
-        public float Height { get { return AssetManager.Font.MeasureString(title).Y; } }
+        public float Width { get { return AssetManager.MenuFont.MeasureString(title).X; } }
+        public float Height { get { return AssetManager.MenuFont.MeasureString(title).Y; } }
         public Color SelectedColor { get; set; }
         public Color DeselectedColor { get; set; }
 
@@ -53,7 +53,7 @@ namespace EnemyFortress.MenuSystem.Base
         {
             color = (isSelected) ? SelectedColor : DeselectedColor;
 
-            batch.DrawString(AssetManager.Font, title, position, color);
+            batch.DrawString(AssetManager.MenuFont, title, position, color);
         }
 
         public bool Clicked()

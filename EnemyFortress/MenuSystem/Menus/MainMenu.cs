@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace EnemyFortress.MenuSystem.Menus
 {
+    /// <summary>
+    /// Main menu scene
+    /// </summary>
     class MainMenu : MenuScene
     {
         public MainMenu()

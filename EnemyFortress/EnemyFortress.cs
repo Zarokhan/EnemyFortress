@@ -76,6 +76,9 @@ namespace EnemyFortress
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// This is called when user exits the application.
+        /// </summary>
         protected override void OnExiting(object sender, EventArgs args)
         {
             SceneManager.OnExiting();

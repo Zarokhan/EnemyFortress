@@ -15,8 +15,10 @@ namespace EnemyFortressServer
     class Client
     {
         public bool Connected { get; private set; }                // Indication if connection with client is made.
-        public string Username { get; private set; }               // Client's username on server.
+        public string Alias { get; private set; }               // Client's username on server.
         public int id { get; private set; }                                // Client's unique id.
+
+        int x, y;
 
         private Server parent;
         private NetworkStream stream;                                 // Network stream used for reading / writing data to / from client.
@@ -43,8 +45,26 @@ namespace EnemyFortressServer
             writer = new BinaryWriter(stream, Encoding.ASCII);
             reader = new BinaryReader(stream, Encoding.ASCII);
 
-            writer.Write("Connected to server");
-            writer.Flush();
+            WriteMessage("Connected to server");
+
+            // Send id to game client
+            WriteMessage(Commands.Send(Command.SendID, id));
+
+            // Spawns client into world
+            Random rnd = new Random(DateTime.Now.Second);
+            x = rnd.Next(1280);
+            y = rnd.Next(720);
+            WriteMessage(Commands.Send(Command.Spawn, x + "|" + y));
+
+            // Send all other game clients to game client
+            for(int i = 0; i < parent.clients.Count; i++)
+            {
+                // We dont need to send ourself
+                if (parent.clients[i].id == id)
+                    continue;
+
+                WriteMessage(Commands.Send(Command.SendClient, parent.clients[i].id + "|" + parent.clients[i].Alias + "|" + x + "|" + y));
+            }
 
             while (Connected)
             {
@@ -56,11 +76,9 @@ namespace EnemyFortressServer
 
                         if (msg.Contains(Commands.KEY))
                             HandleConnectionCommand(msg);
-                        else if (msg.Contains(Commands.GAME_KEY))
-                            HandleGameCommand(msg);
                         else
                         {
-                            msg = Username + ": " + msg;
+                            msg = Alias + ": " + msg;
                             Console.WriteLine(msg);
                             parent.BroadcastMsg(msg);
                         }
@@ -108,28 +126,12 @@ namespace EnemyFortressServer
             switch (command)
             {
                 case (int)Command.Connecting:
-                    Username = splitmsg[2];
-                    string broadcastmsg = Username + " connected";
+                    Alias = splitmsg[2];
+                    string broadcastmsg = Alias + " connected";
                     Console.WriteLine(broadcastmsg);
                     parent.BroadcastMsg(broadcastmsg);
-                    break;
-            }
-        }
 
-        private void HandleGameCommand(string msg)
-        {
-            string[] splitmsg = msg.Split('|');
-            int command = int.Parse(splitmsg[1]);
-
-            switch (command)
-            {
-                case (int)GameCommand.Position:
-                    string[] strpositon = splitmsg[2].Split(',');
-
-                    string broadcastmsg = Username + " connected";
-
-                    Console.WriteLine(broadcastmsg);
-                    parent.BroadcastMsg(broadcastmsg);
+                    parent.BroadcastMsg(Commands.Send(Command.SendClient, id + "|" + Alias + "|" + x + "|" + y));   // 
                     break;
             }
         }

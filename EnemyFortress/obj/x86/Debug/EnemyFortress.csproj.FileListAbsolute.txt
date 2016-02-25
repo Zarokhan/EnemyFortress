@@ -7,9 +7,9 @@ E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.exe
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.pdb
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\dot.jpg
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\Spritefont.spritefont
-E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\Spritefont.xnb
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\af\EnemyFortress.resources.dll
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.Forms.ConnectForm.resources
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.Forms.ConnectForm.af.resources
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.csproj.GenerateResource.Cache
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\af\EnemyFortress.resources.dll
+E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\Spritefont.xnb

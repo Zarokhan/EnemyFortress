@@ -4,29 +4,42 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace EnemyFortressServer
 {
+    /// <summary>
+    /// Server for game
+    /// </summary>
     class Server
     {
-        public const int PORT = 55250;
+        public const int PORT = 55250;      // Port to be used
 
-        private TcpListener listener;
-        private List<Client> clients;
+        private TcpListener listener;       // Listens for incomming traffic
+        public List<Client> clients { get; private set; }       // List of all active clients
 
-        private Thread connectionThread;
-        private Thread disconnectionThread;
+        private Thread connectionThread;        // Connection thread
+        private Thread disconnectionThread;     // Disconnection thread
 
-        private object mylock;
-        private volatile bool running;
-        private int total;
+        private object mylock;              // Lock
+        private volatile bool running;      // If application is running
+        private int total;                  // Total of number of connections made
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Server()
         {
+            Console.WriteLine("EnemyFortress dedicated server 2016\n");
+            Console.WriteLine("Authors: Robin Andersson & Simon Berggren\n");
+
             running = true;
             mylock = new object();
         }
 
+        /// <summary>
+        /// Run method
+        /// </summary>
         public void Run()
         {
             clients = new List<Client>();
@@ -39,11 +52,14 @@ namespace EnemyFortressServer
             disconnectionThread.Start();
         }
 
+        /// <summary>
+        /// Listens for incomming clients
+        /// </summary>
         private void ConnectionListener()
         {
             listener.Start();
-            Console.WriteLine("Listens on: " + PORT.ToString());
-            Console.WriteLine(IPAddress.Any);
+            Console.WriteLine("Listens on port: " + PORT.ToString());
+            Console.WriteLine("IP: " + IPAddress.Any);
 
             while (running)
             {
@@ -66,11 +82,12 @@ namespace EnemyFortressServer
 
                 lock (mylock)
                     clients.Add(user);
-
-                Console.WriteLine("User Connected");
             }
         }
 
+        /// <summary>
+        /// Listens for disconnected clients
+        /// </summary>
         private void DisconnectionListener()
         {
             while (running)
@@ -81,8 +98,8 @@ namespace EnemyFortressServer
                     {
                         if (!clients[i].Connected)
                         {
-                            string msg = clients[i].Username + " disconnected";
-
+                            string msg = clients[i].Alias + " disconnected";
+                            BroadcastMsg(Commands.Send(Command.RemoveClient, clients[i].id));
                             clients[i].Close();
                             clients.RemoveAt(i);
 
@@ -95,6 +112,10 @@ namespace EnemyFortressServer
             }
         }
 
+        /// <summary>
+        /// Sends text message to all clients
+        /// </summary>
+        /// <param name="msg">Text to be sent</param>
         public void BroadcastMsg(string msg)
         {
             lock (mylock)

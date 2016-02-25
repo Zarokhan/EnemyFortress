@@ -73,8 +73,8 @@ namespace EnemyFortress.MenuSystem.Base
         // If first entry, it is placed in the middle of the screen
         protected void AddEntry(string entryText, EventHandler<EventArgs> Event)
         {
-            Vector2 entryPos = new Vector2(camera.viewPort.Width / 2 - (AssetManager.Font.MeasureString(entryText).X / 2),
-                                                           camera.viewPort.Height / 2 + (AssetManager.Font.MeasureString(entryText).Y * entries.Count));
+            Vector2 entryPos = new Vector2(camera.viewPort.Width / 2 - (AssetManager.MenuFont.MeasureString(entryText).X / 2),
+                                                           camera.viewPort.Height / 2 + (AssetManager.MenuFont.MeasureString(entryText).Y * entries.Count));
             MenuEntry entry = new MenuEntry(entryText, entryPos);
             entry.Selected += Event;
             entries.Add(entry);

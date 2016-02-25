@@ -10,8 +10,11 @@ namespace EnemyFortress.SceneSystem.Base
         Active,
         Inactive,
     }
-
-    // base of all scenes
+    
+    /// <summary>
+    /// Abstract scene class.
+    /// All scenes inherit from this class.
+    /// </summary>
     public abstract class Scene
     {
         // Properties
