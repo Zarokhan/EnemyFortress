@@ -13,3 +13,8 @@ E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.Forms.ConnectForm
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.csproj.GenerateResource.Cache
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\af\EnemyFortress.resources.dll
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\Spritefont.xnb
+E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\EnemyFortress.exe.manifest
+E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\EnemyFortress.application
+E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.exe.manifest
+E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.application
+E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.TrustInfo.xml

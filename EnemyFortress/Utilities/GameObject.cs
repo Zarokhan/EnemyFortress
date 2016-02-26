@@ -6,7 +6,7 @@ namespace EnemyFortress.Utilities
     class GameObject
     {
         protected Rectangle sourceRect;
-        protected Vector2 pos;
+        public Vector2 pos;
         protected Vector2 origin;
         protected float scale, rotation;
         protected Texture2D texture;

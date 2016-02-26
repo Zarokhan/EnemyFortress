@@ -10,15 +10,10 @@
         SendID,         // Server to client, send ID to client
         SendClient,    // Server to client, sends a client to another client
         RemoveClient,
-        Spawn
-    }
-
-    public enum Moving
-    {
-        Up,
-        Down,
-        Left,
-        Right
+        Spawn,
+        Movement,
+        Latency,
+        Ping
     }
 
     /// <summary>

@@ -19,6 +19,8 @@ namespace EnemyFortressServer
         public int id { get; private set; }                                // Client's unique id.
 
         int x, y;
+        float latency;
+        int ping;
 
         private Server parent;
         private NetworkStream stream;                                 // Network stream used for reading / writing data to / from client.
@@ -63,7 +65,7 @@ namespace EnemyFortressServer
                 if (parent.clients[i].id == id)
                     continue;
 
-                WriteMessage(Commands.Send(Command.SendClient, parent.clients[i].id + "|" + parent.clients[i].Alias + "|" + x + "|" + y));
+                WriteMessage(Commands.Send(Command.SendClient, parent.clients[i].id + "|" + parent.clients[i].Alias + "|" + parent.clients[i].x + "|" + parent.clients[i].y));
             }
 
             while (Connected)
@@ -115,7 +117,7 @@ namespace EnemyFortressServer
         }
 
         /// <summary>
-        /// Handles a command from server correctly.
+        /// Handles messages from client
         /// </summary>
         /// <param name="msg">Message from server to handle.</param>
         private void HandleConnectionCommand(string msg)
@@ -125,13 +127,34 @@ namespace EnemyFortressServer
 
             switch (command)
             {
+                case (int)Command.Ping: // KEY|COMMAND|ID|Ping
+                    if (int.Parse(splitmsg[2]) != id)
+                        return;
+
+                    ping = int.Parse(splitmsg[3]);
+                    parent.BroadcastMsg(Commands.Send(Command.Ping, splitmsg[2] + "|" + ping));
+                    break;
+                case (int)Command.Latency:  // KEY|COMMAND|ID|MILLISECONDS
+                    if (int.Parse(splitmsg[2]) != id)
+                        return;
+
+                    latency = DateTime.Now.Millisecond - int.Parse(splitmsg[3]);
+                    parent.BroadcastMsg(Commands.Send(Command.Latency, splitmsg[2] + "|" + (int)latency));
+                    break;
+                case (int)Command.Movement: // KEY|COMMAND|ID|X|Y
+                    int receivedid = int.Parse(splitmsg[2]);
+                    x = int.Parse(splitmsg[3]);
+                    y = int.Parse(splitmsg[4]);
+
+                    parent.BroadcastMsg(Commands.Send(Command.Movement, receivedid + "|" + x + "|" + y));
+                    break;
                 case (int)Command.Connecting:
                     Alias = splitmsg[2];
                     string broadcastmsg = Alias + " connected";
                     Console.WriteLine(broadcastmsg);
                     parent.BroadcastMsg(broadcastmsg);
 
-                    parent.BroadcastMsg(Commands.Send(Command.SendClient, id + "|" + Alias + "|" + x + "|" + y));   // 
+                    parent.BroadcastMsg(Commands.Send(Command.SendClient, id + "|" + Alias + "|" + x + "|" + y));
                     break;
             }
         }

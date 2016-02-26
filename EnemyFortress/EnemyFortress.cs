@@ -24,6 +24,8 @@ namespace EnemyFortress
             Graphics.IsFullScreen = false;
             Graphics.PreferredBackBufferWidth = WindowWidth;
             Graphics.PreferredBackBufferHeight = WindowHeight;
+            //this.IsFixedTimeStep = false;     //                6000 fps and 6000 ups ^^
+            //Graphics.SynchronizeWithVerticalRetrace = false;
             Graphics.ApplyChanges();
 
             Window.AllowUserResizing = false;

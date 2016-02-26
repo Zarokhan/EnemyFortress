@@ -20,6 +20,9 @@ namespace EnemyFortress.Networking
         public string IP { get; private set; }
         public int Port { get; private set; }
         public string Alias { get; private set; }
+        public int Latency { get; private set; }
+        public int Ping { get; private set; }
+
 
         private GameScene gameScene;
         private NetworkStream stream;                   // Network stream used for reading / writing data to / from server.
@@ -29,6 +32,7 @@ namespace EnemyFortress.Networking
 
         public volatile bool IsConnected;                  // Indication if connection with server is made.
         private object myLock;                                // Used for synchronization.
+        private int nowMillis;                  // For calculating ping and latency
 
         /// <summary>
         /// Constructor.
@@ -132,6 +136,50 @@ namespace EnemyFortress.Networking
             int cmd = int.Parse(splitMsg[1]);
             switch (cmd)
             {
+                case (int)Command.Ping: // KEY|COMMAND|ID|Ping
+                    if (int.Parse(splitMsg[2]) == ID)
+                        return;
+
+                    for (int i = 0; i < gameScene.otherTanks.Count; i++)
+                    {
+                        RemoteControl control = (RemoteControl)gameScene.otherTanks[i].control;
+                        if (control.ID == int.Parse(splitMsg[2]))
+                            control.Ping = int.Parse(splitMsg[3]);
+                    }
+                    break;
+                case (int)Command.Latency: // KEY|COMMAND|ID|LATENCY
+                    int lat = int.Parse(splitMsg[3]);
+
+                    // Ourself
+                    if (int.Parse(splitMsg[2]) == ID)
+                    {
+                        Latency = lat;
+                        Ping = DateTime.Now.Millisecond - nowMillis;
+                        WriteMessage(Commands.Send(Command.Ping, ID + "|" + Ping)); // KEY|COMMAND|ID|Ping
+                    }
+                    // Other
+                    else
+                    {
+                        for (int i = 0; i < gameScene.otherTanks.Count; i++)
+                        {
+                            RemoteControl control = (RemoteControl)gameScene.otherTanks[i].control;
+                            if (control.ID == int.Parse(splitMsg[2]))
+                                control.Latency = lat;
+                        }
+                    }
+                    break;
+                case (int)Command.Movement: // KEY|COMMAND|ID|X|Y
+                    int receivedID3 = int.Parse(splitMsg[2]);
+                    if (receivedID3 == ID)
+                        return;
+
+                    for(int i = 0; i < gameScene.otherTanks.Count; i++)
+                    {
+                        RemoteControl control = (RemoteControl)gameScene.otherTanks[i].control;
+                        if (control.ID == receivedID3)
+                            control.UpdateMovement(int.Parse(splitMsg[3]), int.Parse(splitMsg[4]));
+                    }
+                    break;
                 case (int)Command.Spawn:                // Spawns client player
                     int x = int.Parse(splitMsg[2]);
                     int y = int.Parse(splitMsg[3]);
@@ -173,6 +221,12 @@ namespace EnemyFortress.Networking
                     IsConnected = false;
                     break;
             }
+        }
+
+        public void UpdateLatency()
+        {
+            nowMillis = DateTime.Now.Millisecond;
+            WriteMessage(Commands.Send(Command.Latency, ID + "|" + nowMillis)); // KEY|COMMAND|ID|MILLISECONDS
         }
 
         public void SetGameScene(GameScene gameScene = null)

@@ -102,12 +102,12 @@ namespace EnemyFortress.Scenes
         private void DrawPlayerList(SpriteBatch batch)
         {
             // Draw player list
-            batch.DrawString(AssetManager.MenuFont, client.Alias, new Vector2(0, 0), Color.Black);
+            batch.DrawString(AssetManager.MenuFont, client.Alias + " Latency: " + client.Latency + " Ping: " + client.Ping, new Vector2(0, 0), Color.Black);
             int height = (int)AssetManager.MenuFont.MeasureString("X").Y;
             for (int i = 0; i < otherTanks.Count; i++)
             {
                 RemoteControl control = (RemoteControl)otherTanks[i].control;
-                batch.DrawString(AssetManager.MenuFont, control.Alias, new Vector2(0, (i + 1) * height), Color.DarkGray);
+                batch.DrawString(AssetManager.MenuFont, control.Alias + " Latency: " + control.Latency + " Ping: " + control.Ping, new Vector2(0, (i + 1) * height), Color.DarkGray);
             }
         }
 

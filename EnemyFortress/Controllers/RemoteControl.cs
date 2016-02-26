@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Utilities;
 
 namespace EnemyFortress.Controllers
 {
@@ -12,6 +13,8 @@ namespace EnemyFortress.Controllers
     {
         public int ID { get; private set; }
         public string Alias { get; private set; }
+        public int Latency { get; set; }
+        public int Ping { get; set; }
 
         public RemoteControl(Client client, Tank tank, int id, string alias) : base(client, tank)
         {
@@ -22,6 +25,12 @@ namespace EnemyFortress.Controllers
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+        }
+
+        public void UpdateMovement(int x, int y)
+        {
+            tank.pos.X = x;
+            tank.pos.Y = y;
         }
     }
 }
