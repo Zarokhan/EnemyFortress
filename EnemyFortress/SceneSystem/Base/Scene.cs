@@ -26,12 +26,14 @@ namespace EnemyFortress.SceneSystem.Base
         private bool otherSceneHasFocus;
         protected SpriteBatch batch;
         protected Camera camera;
+        protected Camera hudCamera;
 
         public Scene()
         {
             State = SceneState.Active;
             batch = new SpriteBatch(SceneManager.GraphicsDevice);
             camera = new Camera(SceneManager.GraphicsDevice.Viewport, new Vector2(SceneManager.GraphicsDevice.Viewport.Width / 2, SceneManager.GraphicsDevice.Viewport.Height / 2));
+            hudCamera = new Camera(SceneManager.GraphicsDevice.Viewport, new Vector2(SceneManager.GraphicsDevice.Viewport.Width / 2, SceneManager.GraphicsDevice.Viewport.Height / 2));
         }
 
         public virtual void HandleInput() { }
@@ -39,6 +41,7 @@ namespace EnemyFortress.SceneSystem.Base
         public virtual void Update(GameTime gameTime, bool otherSceneHasFocus, bool coveredByOtherScene)
         {
             camera.Update(SceneManager.Graphics);
+            hudCamera.Update(SceneManager.Graphics);
 
             this.otherSceneHasFocus = otherSceneHasFocus; 
             State = (coveredByOtherScene) ? SceneState.Inactive : SceneState.Active;

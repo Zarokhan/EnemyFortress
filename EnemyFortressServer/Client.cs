@@ -18,7 +18,8 @@ namespace EnemyFortressServer
         public string Alias { get; private set; }               // Client's username on server.
         public int id { get; private set; }                                // Client's unique id.
 
-        int x, y;
+        float x, y;
+        float rotation; // In radians
         float latency;
         int ping;
 
@@ -141,12 +142,13 @@ namespace EnemyFortressServer
                     latency = DateTime.Now.Millisecond - int.Parse(splitmsg[3]);
                     parent.BroadcastMsg(Commands.Send(Command.Latency, splitmsg[2] + "|" + (int)latency));
                     break;
-                case (int)Command.Movement: // KEY|COMMAND|ID|X|Y
+                case (int)Command.Movement: // KEY|COMMAND|ID|X|Y|ROTATION(RADS)
                     int receivedid = int.Parse(splitmsg[2]);
-                    x = int.Parse(splitmsg[3]);
-                    y = int.Parse(splitmsg[4]);
+                    x = float.Parse(splitmsg[3]);
+                    y = float.Parse(splitmsg[4]);
+                    rotation = float.Parse(splitmsg[5]);
 
-                    parent.BroadcastMsg(Commands.Send(Command.Movement, receivedid + "|" + x + "|" + y));
+                    parent.BroadcastMsg(Commands.Send(Command.Movement, receivedid + "|" + x + "|" + y + "|" + rotation));
                     break;
                 case (int)Command.Connecting:
                     Alias = splitmsg[2];

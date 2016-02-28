@@ -27,10 +27,11 @@ namespace EnemyFortress.Controllers
             base.Update(gameTime);
         }
 
-        public void UpdateMovement(int x, int y)
+        public void UpdateMovement(float x, float y, float rotation)
         {
-            tank.pos.X = x;
-            tank.pos.Y = y;
+            tank.position.X = x;
+            tank.position.Y = y;
+            tank.rotation = rotation;
         }
     }
 }

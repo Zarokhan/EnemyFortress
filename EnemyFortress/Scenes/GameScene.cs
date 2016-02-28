@@ -11,6 +11,7 @@ using EnemyFortress.Player;
 using Microsoft.Xna.Framework.Graphics;
 using EnemyFortress.Utilities;
 using EnemyFortress.Controllers;
+using EnemyFortress.GroundMap;
 
 namespace EnemyFortress.Scenes
 {
@@ -19,20 +20,26 @@ namespace EnemyFortress.Scenes
     /// </summary>
     class GameScene : Scene
     {
+        public bool DrawPing { get; set; }
+
         private Client client;          // Client information
         private Thread listenerThread;  // Listens for incomming traffic
 
+        private TileMap map;
         private Tank tank;
-        public List<Tank> otherTanks { get; private set; }
+        public List<Tank> remoteTanks { get; private set; }
 
         public GameScene(Client client) : base()
         {
             this.client = client;
-            otherTanks = new List<Tank>();
-            client.SetGameScene(this);
+            client.GameScene = this;
+            remoteTanks = new List<Tank>();
+            map = new TileMap();
 
             listenerThread = new Thread(client.HoldConnection);
             listenerThread.Start();
+
+            DrawPing = false;
         }
 
         /// <summary>
@@ -46,7 +53,7 @@ namespace EnemyFortress.Scenes
         {
             Tank tank = new Tank(x, y);
             tank.SetControl(new RemoteControl(client, tank, id, alias));
-            otherTanks.Add(tank);
+            remoteTanks.Add(tank);
         }
 
         /// <summary>
@@ -78,8 +85,8 @@ namespace EnemyFortress.Scenes
             base.Update(gameTime, otherSceneHasFocus, coveredByOtherScene);
             CheckConnection();
 
-            for (int i = 0; i < otherTanks.Count; i++)
-                otherTanks[i].Update(gameTime);
+            for (int i = 0; i < remoteTanks.Count; i++)
+                remoteTanks[i].Update(gameTime);
 
             if (tank != null)
                 tank.Update(gameTime);
@@ -87,27 +94,39 @@ namespace EnemyFortress.Scenes
 
         public override void Draw()
         {
+            // Draws Game
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
+            map.Draw(batch);
 
-            for (int i = 0; i < otherTanks.Count; i++)
-                otherTanks[i].Draw(batch);
+            for (int i = 0; i < remoteTanks.Count; i++)
+                remoteTanks[i].Draw(batch);
 
             if (tank != null)
                 tank.Draw(batch);
-
+            batch.End();
+            batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, hudCamera.Transform);
             DrawPlayerList(batch);
             batch.End();
         }
 
+        /// <summary>
+        /// Draws player list
+        /// </summary>
         private void DrawPlayerList(SpriteBatch batch)
         {
-            // Draw player list
-            batch.DrawString(AssetManager.MenuFont, client.Alias + " Latency: " + client.Latency + " Ping: " + client.Ping, new Vector2(0, 0), Color.Black);
-            int height = (int)AssetManager.MenuFont.MeasureString("X").Y;
-            for (int i = 0; i < otherTanks.Count; i++)
+            string netInfo = "";
+            if (DrawPing)
+                netInfo = " Latency: " + client.Latency + " Ping: " + client.Ping;
+
+            batch.DrawString(AssetManager.Font, client.Alias + netInfo, new Vector2(0, 0), Color.Black);
+            int height = (int)AssetManager.Font.MeasureString("X").Y;
+            for (int i = 0; i < remoteTanks.Count; i++)
             {
-                RemoteControl control = (RemoteControl)otherTanks[i].control;
-                batch.DrawString(AssetManager.MenuFont, control.Alias + " Latency: " + control.Latency + " Ping: " + control.Ping, new Vector2(0, (i + 1) * height), Color.DarkGray);
+                RemoteControl control = (RemoteControl)remoteTanks[i].control;
+                if (DrawPing)
+                    netInfo = " Latency: " + control.Latency + " Ping: " + control.Ping;
+
+                batch.DrawString(AssetManager.Font, control.Alias + netInfo, new Vector2(0, (i + 1) * height), Color.DarkGray);
             }
         }
 

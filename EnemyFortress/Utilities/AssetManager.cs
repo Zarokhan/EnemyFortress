@@ -5,14 +5,17 @@ namespace EnemyFortress.Utilities
 {
     public static class AssetManager
     {
-        public static SpriteFont MenuFont { get; private set; }
-        public static SpriteFont GameFont { get; private set; }
+        public static SpriteFont Font { get; private set; }
         public static Texture2D Dot { get; private set; }
+        public static Texture2D Garden { get; private set; }
+        public static Texture2D Tank { get; private set; }
 
         public static void LoadContent(ContentManager content)
         {
-            MenuFont = content.Load<SpriteFont>("Spritefont");
+            Font = content.Load<SpriteFont>("Spritefont");
             Dot = content.Load<Texture2D>("dot");
+            Garden = content.Load<Texture2D>("spritesheet");
+            Tank = content.Load<Texture2D>("tank1");
         }
     }
 }

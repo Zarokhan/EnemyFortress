@@ -21,25 +21,32 @@ namespace EnemyFortress.Controllers
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            // Check if we want to update latency
+            UpdateLatency(gameTime);
+
+            // Update Movement
+            if (Input.HoldingKey(Keys.W))
+                tank.MoveForward(gameTime, 1);
+            else if (Input.HoldingKey(Keys.S))
+                tank.MoveForward(gameTime, -1);
+            if (Input.HoldingKey(Keys.D))
+                tank.TurnRight(gameTime, 1);
+            else if (Input.HoldingKey(Keys.A))
+                tank.TurnRight(gameTime, -1);
+            // Send movement to server
+            client.WriteMessage(Commands.Send(Command.Movement, client.ID + "|" + tank.position.X + "|" + tank.position.Y + "|" + tank.rotation)); // KEY|COMMAND|ID|X|Y|ROTATION(RADS)
+        }
+
+        /// <summary>
+        /// Check if we want to update latency
+        /// </summary>
+        private void UpdateLatency(GameTime gameTime)
+        {
             latencyUpdateTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            if(latencyUpdateTimer <= 0)
+            if (latencyUpdateTimer <= 0)
             {
                 client.UpdateLatency();
                 latencyUpdateTimer = 1000;
             }
-
-            // Update Movement
-            if (Input.HoldingKey(Keys.Up))
-                tank.MoveUp(gameTime);
-            else if (Input.HoldingKey(Keys.Down))
-                tank.MoveDown(gameTime);
-            if (Input.HoldingKey(Keys.Left))
-                tank.MoveLeft(gameTime);
-            else if (Input.HoldingKey(Keys.Right))
-                tank.MoveRight(gameTime);
-            // Send movement to server
-            client.WriteMessage(Commands.Send(Command.Movement, client.ID + "|" + (int)tank.pos.X + "|" + (int)tank.pos.Y)); // KEY|COMMAND|ID|X|Y
         }
     }
 }

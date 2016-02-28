@@ -63,11 +63,10 @@ namespace EnemyFortressServer
 
             while (running)
             {
-                Console.WriteLine("Waiting for connection...");
                 Client user = null;
                 try
                 {
-                    TcpClient client = listener.AcceptTcpClient();
+                    TcpClient client = listener.AcceptTcpClient(); // Waiting for connection
 
                     user = new Client(this, total);
                     total++;
