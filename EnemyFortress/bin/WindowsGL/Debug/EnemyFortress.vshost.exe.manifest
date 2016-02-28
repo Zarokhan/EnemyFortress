@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="193448">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="194984">
       <assemblyIdentity name="EnemyFortress" version="3.4.0.456" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>KLT1t58oALnZqgMoehpw9QfioM0=</dsig:DigestValue>
+        <dsig:DigestValue>JC6VXWeIyWwRSkJSe1bDRbmtmNk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>ucWwYYm2euvaNc6i0MDgjWoqeyo=</dsig:DigestValue>
+        <dsig:DigestValue>XZ3CpRtYSA53Y5lK4IDgQBZKPL8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,6 +97,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>NGaXkKDl38hpTNbbCPs5YIqgFXo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\grass01.jpg" size="531530">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>Ue44XDxU3eR7kVGVZkbphVgQE5I=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Spritefont.spritefont" size="2068">

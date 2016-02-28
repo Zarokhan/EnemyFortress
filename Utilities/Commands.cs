@@ -10,10 +10,11 @@
         SendID,         // Server to client, send ID to client
         SendClient,    // Server to client, sends a client to another client
         RemoveClient,
+        Latency,
+        Ping,
         Spawn,
         Movement,
-        Latency,
-        Ping
+        Gun
     }
 
     /// <summary>

@@ -27,6 +27,11 @@ namespace EnemyFortress.Controllers
             base.Update(gameTime);
         }
 
+        public void UpdateGun(float gun_rotation)
+        {
+            tank.Gun.rotation = gun_rotation;
+        }
+
         public void UpdateMovement(float x, float y, float rotation)
         {
             tank.position.X = x;

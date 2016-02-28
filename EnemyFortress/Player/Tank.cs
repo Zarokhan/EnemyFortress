@@ -1,5 +1,6 @@
 ﻿using EnemyFortress.Controllers;
 using EnemyFortress.Networking;
+using EnemyFortress.SceneSystem.Base;
 using EnemyFortress.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,8 +8,30 @@ using System;
 
 namespace EnemyFortress.Player
 {
+    class TankWheels : GameObject
+    {
+        public TankWheels() : base(AssetManager.Tank)
+        {
+            sourceRect = GetSourceRect(52, 72, 619, 690);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            width = sourceRect.Width;
+            height = sourceRect.Height;
+
+            scale = Tank.START_SCALE;
+        }
+
+        public void Update(Vector2 position, float rotation)
+        {
+            this.position.X = position.X;
+            this.position.Y = position.Y;
+            this.rotation = rotation;
+        }
+    }
+
     class TankGun : GameObject
     {
+        private float rotation_speed;
+
         public TankGun() : base(AssetManager.Tank)
         {
             sourceRect = GetSourceRect(1296, 80, 233, 532);
@@ -18,15 +41,35 @@ namespace EnemyFortress.Player
             width = sourceRect.Width;
             height = sourceRect.Height;
 
-            scale = 0.1f;
+            scale = Tank.START_SCALE;
+            rotation_speed = 90;
+        }
+
+        /// <summary>
+        /// Turns right if val = 1
+        /// </summary>
+        /// <param name="val">Right(val = 1), Left(val = -1)</param>
+        public void TurnRight(GameTime gameTime, float val = 1)
+        {
+            this.rotation += MathHelper.ToRadians(rotation_speed) * val * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.rotation = this.rotation % MathHelper.ToRadians(360);
+            this.rotation = this.rotation % MathHelper.ToRadians(-360);
+        }
+
+        public void Update(Vector2 position)
+        {
+            this.position.X = position.X;
+            this.position.Y = position.Y;
         }
     }
 
     class Tank : GameObject
     {
-        public Control control { get; private set; }
+        public const float START_SCALE = 0.15f;
 
-        TankGun gun;
+        public Control Control { get; private set; }
+        public TankGun Gun { get; private set; }
+        private TankWheels wheels;
 
         private float speed;
         private float rotation_speed;   // In degrees
@@ -34,16 +77,17 @@ namespace EnemyFortress.Player
         public Tank(int x = 0, int y = 0) : base(AssetManager.Tank)
         {
             sourceRect = GetSourceRect(741, 140, 485, 613);
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height * 0.45f);
             position = new Vector2(x, y);
             width = sourceRect.Width;
             height = sourceRect.Height;
 
-            gun = new TankGun();
+            Gun = new TankGun();
+            wheels = new TankWheels();
 
-            scale = 0.1f;
+            scale = START_SCALE;
 
-            speed = 100f;
+            speed = 130f;
             rotation_speed = 90f;
         }
 
@@ -63,27 +107,33 @@ namespace EnemyFortress.Player
         /// <param name="val">Right(val = 1), Left(val = -1)</param>
         public void TurnRight(GameTime gameTime, float val = 1)
         {
+            this.rotation = this.rotation % MathHelper.ToRadians(360);
             this.rotation += MathHelper.ToRadians(rotation_speed) * val * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void Update(GameTime gameTime)
         {
-            gun.position.X = position.X;
-            gun.position.Y = position.Y;
+            Vector2 temp = new Vector2();
+            temp.X = position.X - (float)Math.Cos(rotation) * height * 0.20f * scale;
+            temp.Y = position.Y - (float)Math.Sin(rotation) * height * 0.20f * scale;
 
-            if (control != null)
-                control.Update(gameTime);
+            Gun.Update(temp);
+            wheels.Update(this.position, rotation);
+
+            if (Control != null)
+                Control.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch batch, float rotationOffset = 0)
         {
+            wheels.Draw(batch, MathHelper.ToRadians(90));
             base.Draw(batch, MathHelper.ToRadians(90));
-            gun.Draw(batch);
+            Gun.Draw(batch, MathHelper.ToRadians(90));
         }
 
         public void SetControl(Control control = null)
         {
-            this.control = control;
+            this.Control = control;
         }
     }
 }

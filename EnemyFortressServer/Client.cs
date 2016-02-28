@@ -20,6 +20,7 @@ namespace EnemyFortressServer
 
         float x, y;
         float rotation; // In radians
+        float gun_rotation;
         float latency;
         int ping;
 
@@ -125,6 +126,7 @@ namespace EnemyFortressServer
         {
             string[] splitmsg = msg.Split('|');
             int command = int.Parse(splitmsg[1]);
+            int receivedid;
 
             switch (command)
             {
@@ -142,8 +144,13 @@ namespace EnemyFortressServer
                     latency = DateTime.Now.Millisecond - int.Parse(splitmsg[3]);
                     parent.BroadcastMsg(Commands.Send(Command.Latency, splitmsg[2] + "|" + (int)latency));
                     break;
+                case (int)Command.Gun: // KEY|COMMAND|ID|ROTATION(RADS)
+                    receivedid = int.Parse(splitmsg[2]);
+                    gun_rotation = float.Parse(splitmsg[3]);
+                    parent.BroadcastMsg(Commands.Send(Command.Gun, receivedid + "|" + gun_rotation));
+                    break;
                 case (int)Command.Movement: // KEY|COMMAND|ID|X|Y|ROTATION(RADS)
-                    int receivedid = int.Parse(splitmsg[2]);
+                    receivedid = int.Parse(splitmsg[2]);
                     x = float.Parse(splitmsg[3]);
                     y = float.Parse(splitmsg[4]);
                     rotation = float.Parse(splitmsg[5]);

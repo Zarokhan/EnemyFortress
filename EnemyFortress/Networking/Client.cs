@@ -142,6 +142,7 @@ namespace EnemyFortress.Networking
         {
             string[] splitMsg = msg.Split('|');
             int cmd = int.Parse(splitMsg[1]);
+            int receivedID;
             switch (cmd)
             {
                 case (int)Command.Ping: // KEY|COMMAND|ID|Ping
@@ -150,7 +151,7 @@ namespace EnemyFortress.Networking
 
                     for (int i = 0; i < GameScene.remoteTanks.Count; i++)
                     {
-                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].control;
+                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].Control;
                         if (control.ID == int.Parse(splitMsg[2]))
                             control.Ping = int.Parse(splitMsg[3]);
                     }
@@ -170,21 +171,33 @@ namespace EnemyFortress.Networking
                     {
                         for (int i = 0; i < GameScene.remoteTanks.Count; i++)
                         {
-                            RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].control;
+                            RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].Control;
                             if (control.ID == int.Parse(splitMsg[2]))
                                 control.Latency = lat;
                         }
                     }
                     break;
+                case (int)Command.Gun: // KEY|COMMAND|ID|ROTATION(RADS)
+                    receivedID = int.Parse(splitMsg[2]);
+                    if (receivedID == ID)
+                        return;
+
+                    for (int i = 0; i < GameScene.remoteTanks.Count; i++)
+                    {
+                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].Control;
+                        if (control.ID == receivedID)
+                            control.UpdateGun(float.Parse(splitMsg[3]));
+                    }
+                    break;
                 case (int)Command.Movement: // KEY|COMMAND|ID|X|Y|ROTATION(RADS)
-                    int receivedID3 = int.Parse(splitMsg[2]);
-                    if (receivedID3 == ID)
+                    receivedID = int.Parse(splitMsg[2]);
+                    if (receivedID == ID)
                         return;
 
                     for(int i = 0; i < GameScene.remoteTanks.Count; i++)
                     {
-                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].control;
-                        if (control.ID == receivedID3)
+                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].Control;
+                        if (control.ID == receivedID)
                             control.UpdateMovement(float.Parse(splitMsg[3]), float.Parse(splitMsg[4]), float.Parse(splitMsg[5]));
                     }
                     break;
@@ -195,28 +208,28 @@ namespace EnemyFortress.Networking
                     GameScene.SpawnClientTank(x, y);
                     break;
                 case (int)Command.RemoveClient:     // Removes remote player from the game
-                    int receivedID2 = int.Parse(splitMsg[2]);
-                    if (receivedID2 == ID)
-                        break;
+                    receivedID = int.Parse(splitMsg[2]);
+                    if (receivedID == ID)
+                        return;
 
                     // Removes remote player from game
                     for (int i = 0; i < GameScene.remoteTanks.Count; i++)
                     {
-                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].control;
-                        if (receivedID2 == control.ID)
+                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].Control;
+                        if (receivedID == control.ID)
                             GameScene.remoteTanks.RemoveAt(i);
                     }
 
                     break;
                 case (int)Command.SendClient:   // Receives client (from servers point of view)
-                    int receivedID = int.Parse(splitMsg[2]);
+                    receivedID = int.Parse(splitMsg[2]);
                     if (receivedID == ID)
-                        break;
+                        return;
 
                     // Check if we already received client
                     for (int i = 0; i < GameScene.remoteTanks.Count; i++)
                     {
-                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].control;
+                        RemoteControl control = (RemoteControl)GameScene.remoteTanks[i].Control;
                         if (receivedID == control.ID)
                             return;
                     }

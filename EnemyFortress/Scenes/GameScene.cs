@@ -80,6 +80,15 @@ namespace EnemyFortress.Scenes
             }
         }
 
+        public override void HandleInput()
+        {
+            if (tank == null)
+                return;
+
+            ClientControl control = (ClientControl)tank.Control;
+            control.Mouse = camera.UnProject(Input.GetMousePosition());
+        }
+
         public override void Update(GameTime gameTime, bool otherSceneHasFocus, bool coveredByOtherScene)
         {
             base.Update(gameTime, otherSceneHasFocus, coveredByOtherScene);
@@ -106,6 +115,13 @@ namespace EnemyFortress.Scenes
             batch.End();
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, hudCamera.Transform);
             DrawPlayerList(batch);
+
+            //if (tank != null) // DEBUG 
+            //{
+            //    batch.DrawString(AssetManager.Font, "Target: " + (int)MathHelper.ToDegrees(tank.Gun.targetAngle), new Vector2(200, 200), Color.Black);
+            //    batch.DrawString(AssetManager.Font, "GunRot: " + (int)MathHelper.ToDegrees(tank.Gun.rotation), new Vector2(200, 250), Color.Black);
+            //}
+
             batch.End();
         }
 
@@ -122,7 +138,7 @@ namespace EnemyFortress.Scenes
             int height = (int)AssetManager.Font.MeasureString("X").Y;
             for (int i = 0; i < remoteTanks.Count; i++)
             {
-                RemoteControl control = (RemoteControl)remoteTanks[i].control;
+                RemoteControl control = (RemoteControl)remoteTanks[i].Control;
                 if (DrawPing)
                     netInfo = " Latency: " + control.Latency + " Ping: " + control.Ping;
 
