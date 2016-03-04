@@ -7,12 +7,12 @@ namespace EnemyFortress.Utilities
     {
         public Rectangle sourceRect;
         public Vector2 position;
-        protected Vector2 origin;
+        public Vector2 origin;
         public float scale, rotation;
-        protected Texture2D texture;
-        protected Color color;
-        protected SpriteEffects fx;
-        protected int width, height;
+        public Texture2D texture;
+        public Color color;
+        private SpriteEffects fx;
+        public int width, height;
 
         public GameObject(Texture2D texture)
         {

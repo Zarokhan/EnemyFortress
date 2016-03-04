@@ -20,21 +20,19 @@ namespace EnemyFortress.Scenes
     /// </summary>
     class GameScene : Scene
     {
+        public List<Tank> remoteTanks { get; private set; }
         public bool DrawPing { get; set; }
 
         private Client client;          // Client information
         private Thread listenerThread;  // Listens for incomming traffic
 
-        private TileMap map;
         private Tank tank;
-        public List<Tank> remoteTanks { get; private set; }
 
         public GameScene(Client client) : base()
         {
             this.client = client;
             client.GameScene = this;
             remoteTanks = new List<Tank>();
-            map = new TileMap();
 
             listenerThread = new Thread(client.HoldConnection);
             listenerThread.Start();
@@ -93,19 +91,21 @@ namespace EnemyFortress.Scenes
         {
             base.Update(gameTime, otherSceneHasFocus, coveredByOtherScene);
             CheckConnection();
+            if (tank == null)
+                return;
+
+            camera.Position = new Vector2(tank.position.X, tank.position.Y);
 
             for (int i = 0; i < remoteTanks.Count; i++)
                 remoteTanks[i].Update(gameTime);
 
-            if (tank != null)
-                tank.Update(gameTime);
+            tank.Update(gameTime);
         }
 
         public override void Draw()
         {
             // Draws Game
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
-            map.Draw(batch);
 
             for (int i = 0; i < remoteTanks.Count; i++)
                 remoteTanks[i].Draw(batch);
@@ -115,13 +115,6 @@ namespace EnemyFortress.Scenes
             batch.End();
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, hudCamera.Transform);
             DrawPlayerList(batch);
-
-            //if (tank != null) // DEBUG 
-            //{
-            //    batch.DrawString(AssetManager.Font, "Target: " + (int)MathHelper.ToDegrees(tank.Gun.targetAngle), new Vector2(200, 200), Color.Black);
-            //    batch.DrawString(AssetManager.Font, "GunRot: " + (int)MathHelper.ToDegrees(tank.Gun.rotation), new Vector2(200, 250), Color.Black);
-            //}
-
             batch.End();
         }
 

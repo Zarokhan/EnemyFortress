@@ -1,4 +1,5 @@
-﻿using EnemyFortress.Forms;
+﻿using EnemyFortress.Editor;
+using EnemyFortress.Forms;
 using EnemyFortress.MenuSystem.Base;
 using EnemyFortress.Networking;
 using EnemyFortress.Scenes;
@@ -17,6 +18,7 @@ namespace EnemyFortress.MenuSystem.Menus
             : base("Main Menu")
         {
             AddEntry("Play Game", OnPlayClicked);
+            AddEntry("Level Editor", OnEditorClicked);
             AddEntry("Exit", OnExitClicked);
         }
 
@@ -31,6 +33,11 @@ namespace EnemyFortress.MenuSystem.Menus
             Client client = new Client(form);
 
             AddScene(new GameScene(client));
+        }
+
+        void OnEditorClicked(object o, EventArgs e)
+        {
+            AddScene(new EditorScene());
         }
 
         void OnExitClicked(object o, EventArgs e)

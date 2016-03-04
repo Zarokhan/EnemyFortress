@@ -18,6 +18,5 @@ E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\EnemyFortress.application
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.exe.manifest
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.application
 E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.TrustInfo.xml
-E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\spritesheet.png
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\tank1.png
-E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\grass01.jpg
+E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\cobbleset-128.png

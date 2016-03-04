@@ -29,8 +29,8 @@ namespace EnemyFortress.GroundMap
                 for(int j = 0; j < tile.GetLength(0); j++)
                 {
                     int id = j + i * tile.GetLength(1);
-                    Vector2 position = new Vector2(j * Tile.SIZE, i * Tile.SIZE);
-                    tile[i, j] = new Tile(id, TileType.Grass, position);
+                    Point position = new Point(j, i);
+                    tile[i, j] = new Tile(id, position);
                 }
             }
         }
@@ -64,35 +64,35 @@ namespace EnemyFortress.GroundMap
             }
             sr.Dispose();
 
-            ProcessMap();
+            //ProcessMap();
         }
 
-        private void ProcessMap()
-        {
-            tiles_width = lines[0].Length;
-            tiles_height = lines.Count;
+        //private void ProcessMap()
+        //{
+        //    tiles_width = lines[0].Length;
+        //    tiles_height = lines.Count;
 
-            tile = new Tile[tiles_height, tiles_width];
-            for (int y = 0; y < tile.GetLength(0); y++)
-            {
-                for (int x = 0; x < tile.GetLength(1); x++)
-                {
-                    TileType type = TileType.Grass;
-                    Vector2 position = new Vector2(x * Tile.SIZE, y * Tile.SIZE);
+        //    tile = new Tile[tiles_height, tiles_width];
+        //    for (int y = 0; y < tile.GetLength(0); y++)
+        //    {
+        //        for (int x = 0; x < tile.GetLength(1); x++)
+        //        {
+        //            TileType type = TileType.Grass;
+        //            Point position = new Point(x, y);
 
-                    switch (lines[y].Substring(x, 1))
-                    {
-                        case "G":
-                            type = TileType.Grass;
-                            break;
-                    }
+        //            switch (lines[y].Substring(x, 1))
+        //            {
+        //                case "G":
+        //                    type = TileType.Grass;
+        //                    break;
+        //            }
 
-                    int id = x + y * tile.GetLength(1);
-                    tile[y, x] = new Tile(id, type, position);
+        //            int id = x + y * tile.GetLength(1);
+        //            tile[y, x] = new Tile(id, type, position);
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
         public void Draw(SpriteBatch batch)
         {

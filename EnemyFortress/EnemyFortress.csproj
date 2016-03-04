@@ -79,6 +79,7 @@
     <Compile Include="Control.cs" />
     <Compile Include="Controllers\ClientControl.cs" />
     <Compile Include="Controllers\RemoteControl.cs" />
+    <Compile Include="Editor\EditorScene.cs" />
     <Compile Include="EnemyFortress.cs" />
     <Compile Include="Forms\ConnectForm.cs">
       <SubType>Form</SubType>
@@ -88,7 +89,6 @@
     </Compile>
     <Compile Include="GroundMap\Tile.cs" />
     <Compile Include="GroundMap\TileMap.cs" />
-    <Compile Include="GroundMap\TileType.cs" />
     <Compile Include="MenuSystem\Base\MenuEntry.cs" />
     <Compile Include="MenuSystem\Base\MenuScene.cs" />
     <Compile Include="MenuSystem\Menus\MainMenu.cs" />
@@ -120,10 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\grass01.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\spritesheet.png">
+    <Content Include="Content\cobbleset-128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\dot.jpg">

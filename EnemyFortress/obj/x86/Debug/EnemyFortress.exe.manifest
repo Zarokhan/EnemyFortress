@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>JC6VXWeIyWwRSkJSe1bDRbmtmNk=</dsig:DigestValue>
+        <dsig:DigestValue>6mUuFflYBI0b7N9hpSx7TVnL1UU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>XZ3CpRtYSA53Y5lK4IDgQBZKPL8=</dsig:DigestValue>
+        <dsig:DigestValue>k+PsE99Ws+wllhrGCqj7byWlveg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -90,6 +90,15 @@
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="Content\cobbleset-128.png" size="544278">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>5wiRjD6rebKo2WpvLPb8/YEPXaY=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\dot.jpg" size="539">
     <hash>
       <dsig:Transforms>
@@ -97,15 +106,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>NGaXkKDl38hpTNbbCPs5YIqgFXo=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Content\grass01.jpg" size="531530">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>Ue44XDxU3eR7kVGVZkbphVgQE5I=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Spritefont.spritefont" size="2068">
@@ -124,15 +124,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>pGjJEBxVkwhnG7C8GHdR9r7r4rw=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Content\spritesheet.png" size="6700">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>+6AzSLU4aeQ/m+5/CFFy4xKa68o=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\tank1.png" size="230328">

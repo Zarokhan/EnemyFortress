@@ -6,32 +6,20 @@ namespace EnemyFortress.GroundMap
 {
     class Tile : GameObject
     {
-        public const int SIZE = 16;
         public int id;
-        public bool walkable = true;
-        public TileType type;
 
-        public Tile(int id, TileType type, Vector2 pos)
-            : base(AssetManager.Garden)
+        public Tile(int id, Point pos)
+            : base(AssetManager.Tilesheet)
         {
             this.id = id;
             this.scale = 1;
-            origin = new Vector2(SIZE * 0.5f * scale, SIZE * 0.5f * scale);
-            this.position = (pos + origin) * scale;
-            this.width = (int)(SIZE * scale);
-            this.height = (int)(SIZE * scale);
-            this.type = type;
-            SetSourceRect();
-        }
-
-        public void SetSourceRect()
-        {
-            switch (type)
-            {
-                case TileType.Grass:
-                    sourceRect = GetSourceRect(1, 4, SIZE);
-                    break;
-            }
+            width = texture.Width;
+            height = texture.Height;
+            origin = new Vector2(width * 0.5f * scale, height * 0.5f * scale);
+            this.position = new Vector2();
+            this.position.X = (pos.X * width) + origin.X;
+            this.position.Y = (pos.Y * height) + origin.Y;
+            sourceRect = new Rectangle(0, 0, width, height);
         }
     }
 }
