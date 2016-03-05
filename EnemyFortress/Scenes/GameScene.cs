@@ -94,7 +94,7 @@ namespace EnemyFortress.Scenes
             if (tank == null)
                 return;
 
-            camera.Position = new Vector2(tank.position.X, tank.position.Y);
+            camera.position = new Vector2(tank.position.X, tank.position.Y);
 
             for (int i = 0; i < remoteTanks.Count; i++)
                 remoteTanks[i].Update(gameTime);

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="196008">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="197032">
       <assemblyIdentity name="EnemyFortress" version="3.4.0.456" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>kT3pYm6wgnA+pxWmJ0/Mq+7/hrU=</dsig:DigestValue>
+        <dsig:DigestValue>QDJCU7YQ9stlSJolHHeEPI98klI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>5+cITui+A/Nz/1Gf8P0FUDSTv5Q=</dsig:DigestValue>
+        <dsig:DigestValue>sKsV1+atcIKxl0VwnYFq3tkiUPI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -90,13 +90,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Content\cobbleset-128.png" size="544278">
+  <file name="Content\cobbleset-128.png" size="544668">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>5wiRjD6rebKo2WpvLPb8/YEPXaY=</dsig:DigestValue>
+      <dsig:DigestValue>Ejk3Wi/nS5Bld0+iKkjoTn8htYg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\dot.jpg" size="539">
