@@ -1,4 +1,5 @@
-﻿using EnemyFortress.SceneSystem.Base;
+﻿using EnemyFortress.MenuSystem.Menus;
+using EnemyFortress.SceneSystem.Base;
 using EnemyFortress.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,17 +37,28 @@ namespace EnemyFortress.Editor
             int x = currentTile % xTiles;
             sourceRect.X = x * width;
             sourceRect.Y = y * height;
+
+            // Checkbounds
+            if (currentTile >= maxTiles)
+                currentTile = 0;
+            if (currentTile < 0)
+                currentTile = maxTiles;
         }
     }
 
     class EditorScene : Scene
     {
-        Vector2 Mouse { get; set; }
-        CurrentObject current;
+        public Vector2 Mouse { get; private set; }
+        public CurrentObject current;
 
         public EditorScene() : base()
         {
             current = new CurrentObject();
+        }
+
+        public void SetZoom(float val = 1)
+        {
+            camera.Zoom = val;
         }
 
         public override void Update(GameTime gameTime, bool otherSceneHasFocus, bool coveredByOtherScene)
@@ -56,7 +68,9 @@ namespace EnemyFortress.Editor
             current.position.Y = Mouse.Y;
 
             if (Input.ClickedKey(Keys.Q))
-                current.NextTile();
+                current.NextTile(1);
+            else if (Input.ClickedKey(Keys.W))
+                current.NextTile(-1);
         }
 
         public override void HandleInput()
@@ -69,6 +83,12 @@ namespace EnemyFortress.Editor
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
             current.Draw(batch);
             batch.End();
+        }
+
+        public override void OnExiting()
+        {
+            SceneManager.AddScene(new MainMenu());
+            SceneManager.RemoveScene(this);
         }
     }
 }

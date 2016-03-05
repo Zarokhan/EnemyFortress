@@ -5,6 +5,7 @@ namespace EnemyFortress.Utilities
 {
     public class Camera
     {
+        public float Zoom { get; set; }
         private Matrix transform;
         private Vector2 position;
         private float rotation, zoomX, zoomY, lerp = 0.1f;
@@ -14,6 +15,7 @@ namespace EnemyFortress.Utilities
         {
             this.viewPort = viewPort;
             this.position = position;
+            Zoom = 1;
         }
 
         public void Update(GraphicsDeviceManager graphics)
@@ -25,7 +27,7 @@ namespace EnemyFortress.Utilities
 
             transform = Matrix.CreateTranslation(new Vector3(-position.X, -position.Y, 0)) *
                         Matrix.CreateRotationZ(rotation) *
-                        Matrix.CreateScale(zoomX, zoomY, 1) *
+                        Matrix.CreateScale(zoomX, zoomY, Zoom) *
                         Matrix.CreateTranslation(new Vector3(width / 2, height / 2, 0));
         }
         public void Lerp(Vector2 newPos)
