@@ -6,20 +6,14 @@ namespace EnemyFortress.GroundMap
 {
     class Tile : GameObject
     {
-        public int id;
-
-        public Tile(int id, Point pos)
+        public Tile(int posx, int posy, int srcx, int srcy)
             : base(AssetManager.Tilesheet)
         {
-            this.id = id;
-            this.scale = 1;
-            width = texture.Width;
-            height = texture.Height;
-            origin = new Vector2(width * 0.5f * scale, height * 0.5f * scale);
-            this.position = new Vector2();
-            this.position.X = (pos.X * width) + origin.X;
-            this.position.Y = (pos.Y * height) + origin.Y;
-            sourceRect = new Rectangle(0, 0, width, height);
+            width = 128;
+            height = 128;
+            origin = new Vector2(width * 0.5f, height * 0.5f);
+            position = new Vector2(posx, posy);
+            sourceRect = new Rectangle(srcx, srcy, width, height);
         }
     }
 }

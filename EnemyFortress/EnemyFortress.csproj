@@ -151,6 +151,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\map.efmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="EnemyFortress_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>

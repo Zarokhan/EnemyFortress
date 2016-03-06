@@ -4,3 +4,9 @@ E:\git\EnemyFortress\EnemyFortressServer\bin\Debug\EnemyFortressServer.pdb
 E:\git\EnemyFortress\EnemyFortressServer\obj\Debug\EnemyFortressServer.csprojResolveAssemblyReference.cache
 E:\git\EnemyFortress\EnemyFortressServer\obj\Debug\EnemyFortressServer.exe
 E:\git\EnemyFortress\EnemyFortressServer\obj\Debug\EnemyFortressServer.pdb
+C:\Akriv\Git\EnemyFortress\EnemyFortressServer\bin\Debug\EnemyFortressServer.exe.config
+C:\Akriv\Git\EnemyFortress\EnemyFortressServer\bin\Debug\EnemyFortressServer.exe
+C:\Akriv\Git\EnemyFortress\EnemyFortressServer\bin\Debug\EnemyFortressServer.pdb
+C:\Akriv\Git\EnemyFortress\EnemyFortressServer\obj\Debug\EnemyFortressServer.csprojResolveAssemblyReference.cache
+C:\Akriv\Git\EnemyFortress\EnemyFortressServer\obj\Debug\EnemyFortressServer.exe
+C:\Akriv\Git\EnemyFortress\EnemyFortressServer\obj\Debug\EnemyFortressServer.pdb

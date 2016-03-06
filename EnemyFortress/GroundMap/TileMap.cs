@@ -8,91 +8,59 @@ namespace EnemyFortress.GroundMap
 {
     class TileMap
     {
-        public int tiles_width;
-        public int tiles_height;
-
-        // Read map from text file
-        private List<string> lines;
-
         public Tile[,] tile;
 
-        private string mapName;
+        private string map;
 
-        public TileMap(string mapName = null)
+        public TileMap(string map = null)
         {
-            this.mapName = mapName;
-            //LoadMap(mapName);
+            this.map = map;
             tile = new Tile[100,100];
-
-            for(int i = 0; i < tile.GetLength(1); i++)
-            {
-                for(int j = 0; j < tile.GetLength(0); j++)
-                {
-                    int id = j + i * tile.GetLength(1);
-                    Point position = new Point(j, i);
-                    tile[i, j] = new Tile(id, position);
-                }
-            }
+            LoadMap(map);
         }
 
         /// <summary>
         /// Loads map from file
         /// </summary>
-        /// <param name="mapName"></param>
-        public void LoadMap(string mapName)
+        /// <param name="map"></param>
+        public void LoadMap(string map)
         {
-            this.mapName = mapName;
-            StreamReader sr;
-
-            sr = new StreamReader(@"Content\Maps\" + mapName + ".txt");
-
-            lines = new List<string>();
+            this.map = map;
+            tile = new Tile[100, 100];
+            StreamReader sr = new StreamReader(@"Content\" + map + ".efmap");
+            List<string> lines = new List<string>();
 
             while (!sr.EndOfStream)
             {
-                string line = sr.ReadLine();
-                // Will stop loading map after - character
-                if (line.Substring(0, 1).Equals("-"))
+                string line = sr.ReadLine();        // one line
+                string[] split = line.Split('|');   // separate the data
+                int x = 0, y = 0, posx = 0, posy = 0, srcx = 0, srcy = 0;   // converts the data into integers
+                // Process data
+                for(int i = 1; i < split.Length; i++)
                 {
-                    break;
+                    if (string.IsNullOrWhiteSpace(split[i]))
+                        continue;
+                    string[] xy = split[i].Split('-');
+                    switch (i)
+                    {
+                        case 1:
+                            x = int.Parse(xy[0]);
+                            y = int.Parse(xy[1]);
+                            break;
+                        case 2:
+                            posx = int.Parse(xy[0]);
+                            posy = int.Parse(xy[1]);
+                            break;
+                        case 3:
+                            srcx = int.Parse(xy[0]);
+                            srcy = int.Parse(xy[1]);
+                            break;
+                    }
                 }
-                // Will not execute a row with two / characters, acts like comments in map file. 
-                if (!line.Substring(0, 2).Equals("//"))
-                {
-                    lines.Add(line.ToUpper());
-                }
+                tile[y, x] = new Tile(posx, posy, srcx, srcy);
             }
             sr.Dispose();
-
-            //ProcessMap();
         }
-
-        //private void ProcessMap()
-        //{
-        //    tiles_width = lines[0].Length;
-        //    tiles_height = lines.Count;
-
-        //    tile = new Tile[tiles_height, tiles_width];
-        //    for (int y = 0; y < tile.GetLength(0); y++)
-        //    {
-        //        for (int x = 0; x < tile.GetLength(1); x++)
-        //        {
-        //            TileType type = TileType.Grass;
-        //            Point position = new Point(x, y);
-
-        //            switch (lines[y].Substring(x, 1))
-        //            {
-        //                case "G":
-        //                    type = TileType.Grass;
-        //                    break;
-        //            }
-
-        //            int id = x + y * tile.GetLength(1);
-        //            tile[y, x] = new Tile(id, type, position);
-
-        //        }
-        //    }
-        //}
 
         public void Draw(SpriteBatch batch)
         {
@@ -100,6 +68,9 @@ namespace EnemyFortress.GroundMap
             {
                 for (int x = 0; x < tile.GetLength(1); x++)
                 {
+                    if (tile[y, x] == null)
+                        continue;
+
                     tile[y, x].Draw(batch);
                 }
             }

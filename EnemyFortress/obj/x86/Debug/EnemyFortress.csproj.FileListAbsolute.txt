@@ -42,3 +42,4 @@ C:\Akriv\Git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.TrustInfo.x
 C:\Akriv\Git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.exe.manifest
 C:\Akriv\Git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.application
 C:\Akriv\Git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.exe
+C:\Akriv\Git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\map.efmap

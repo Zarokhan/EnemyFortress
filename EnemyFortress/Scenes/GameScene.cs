@@ -26,6 +26,7 @@ namespace EnemyFortress.Scenes
         private Client client;          // Client information
         private Thread listenerThread;  // Listens for incomming traffic
 
+        private TileMap map;
         private Tank tank;
 
         public GameScene(Client client) : base()
@@ -33,6 +34,7 @@ namespace EnemyFortress.Scenes
             this.client = client;
             client.GameScene = this;
             remoteTanks = new List<Tank>();
+            map = new TileMap("map");
 
             listenerThread = new Thread(client.HoldConnection);
             listenerThread.Start();
@@ -106,6 +108,7 @@ namespace EnemyFortress.Scenes
         {
             // Draws Game
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
+            map.Draw(batch);
 
             for (int i = 0; i < remoteTanks.Count; i++)
                 remoteTanks[i].Draw(batch);
