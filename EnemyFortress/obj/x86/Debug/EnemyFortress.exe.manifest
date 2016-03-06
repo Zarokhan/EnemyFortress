@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="197032">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="197544">
       <assemblyIdentity name="EnemyFortress" version="3.4.0.456" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>QDJCU7YQ9stlSJolHHeEPI98klI=</dsig:DigestValue>
+        <dsig:DigestValue>Hg7Q012LPW6FvN5VQggJszaENX8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>sKsV1+atcIKxl0VwnYFq3tkiUPI=</dsig:DigestValue>
+        <dsig:DigestValue>XIHZAjzA1dfC95hS6sudzNPXwUI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

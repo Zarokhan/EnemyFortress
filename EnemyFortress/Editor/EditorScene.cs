@@ -4,10 +4,16 @@ using EnemyFortress.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace EnemyFortress.Editor
 {
+    /// <summary>
+    /// Helper class for level editor
+    /// Basically represents the object you place into the world
+    /// </summary>
     class CurrentObject : GameObject
     {
         int xTiles;
@@ -47,11 +53,21 @@ namespace EnemyFortress.Editor
         }
     }
 
+    /// <summary>
+    /// EditorScene created by Zarokhan
+    /// 
+    /// Keys
+    /// Q: Prev tile
+    /// W: Next tile
+    /// Back: Delete tile
+    /// Space: Save tile
+    /// </summary>
     class EditorScene : Scene
     {
-        public Vector2 Mouse { get; private set; }
-        public CurrentObject current;
+        private Vector2 mouse;
+        private CurrentObject current;
         private GameObject[,] map;
+        private List<string> lines;
 
         private bool showLines;
 
@@ -62,40 +78,58 @@ namespace EnemyFortress.Editor
             showLines = true;
         }
 
+        /// <summary>
+        /// Saves the map to selected path
+        /// </summary>
         private void SaveMap()
         {
             SaveFileDialog dialog = new SaveFileDialog(); // Fixa: Enabrt .map filformat
+            dialog.Filter = "EnemyFortress Map | *.efmap";
+            dialog.DefaultExt = "efmap";
             DialogResult result = dialog.ShowDialog();
 
-            switch (result)
+            if (result == DialogResult.Cancel)
+                return;
+            if (result == DialogResult.OK)
             {
-                case DialogResult.None:
-                    break;
-                case DialogResult.OK:
-                    break;
-                case DialogResult.Cancel:
-                    break;
-                case DialogResult.Abort:
-                    break;
-                case DialogResult.Retry:
-                    break;
-                case DialogResult.Ignore:
-                    break;
-                case DialogResult.Yes:
-                    break;
-                case DialogResult.No:
-                    break;
-                default:
-                    break;
+                ProcessMap();
+                string path = dialog.FileName;
+                StreamWriter writer = new StreamWriter(path);
+                foreach (string line in lines)
+                {
+                    writer.WriteLine(line);
+                }
+                writer.Close();
             }
-
-            string path = "";
         }
 
+        /// <summary>
+        /// Process the map into lines of string
+        /// </summary>
+        private void ProcessMap()
+        {
+            lines = new List<string>();
+            for(int y = 0; y < map.GetLength(1); y++)
+            {
+                for(int x = 0; x < map.GetLength(0); x++)
+                {
+                    if (map[y, x] == null)
+                        continue;
+
+                    GameObject obj = map[y, x];
+                    string line = "obj|" + x + "-" + y + "|" + obj.position.X + "-" + obj.position.Y + "|" + obj.sourceRect.X + "-" + obj.sourceRect.Y + "|";
+                    lines.Add(line);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the object that the mouse hovers
+        /// </summary>
         private void DeleteObject()
         {
-            int x = (int)((Mouse.X) / 128);
-            int y = (int)((Mouse.Y) / 128);
+            int x = (int)((mouse.X) / 128);
+            int y = (int)((mouse.Y) / 128);
 
             if (x < 0 || y < 0)
                 return;
@@ -103,12 +137,15 @@ namespace EnemyFortress.Editor
             map[y, x] = null;
         }
 
+        /// <summary>
+        /// Sets current object into the game world
+        /// </summary>
         private void SetObject()
         {
-            int x = (int)((Mouse.X) / 128);
-            int y = (int)((Mouse.Y) / 128);
+            int x = (int)((mouse.X) / 128);
+            int y = (int)((mouse.Y) / 128);
 
-            if (x < 0 || y < 0)
+            if (x < 0 || y < 0 || x >= map.GetLength(0) || y >= map.GetLength(1))
                 return;
 
             GameObject obj = new GameObject(AssetManager.Tilesheet);
@@ -124,8 +161,8 @@ namespace EnemyFortress.Editor
         public override void Update(GameTime gameTime, bool otherSceneHasFocus, bool coveredByOtherScene)
         {
             base.Update(gameTime, otherSceneHasFocus, coveredByOtherScene);
-            current.position.X = Mouse.X;
-            current.position.Y = Mouse.Y;
+            current.position.X = mouse.X;
+            current.position.Y = mouse.Y;
 
             // Save map
             if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.Space))
@@ -158,7 +195,7 @@ namespace EnemyFortress.Editor
 
         public override void HandleInput()
         {
-            Mouse = camera.UnProject(Input.GetMousePosition());
+            mouse = camera.UnProject(Input.GetMousePosition());
         }
 
         public override void Draw()
