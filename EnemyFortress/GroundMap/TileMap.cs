@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using EnemyFortress.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace EnemyFortress.GroundMap
     class TileMap
     {
         public Tile[,] tile;
+        public Vector2 Spawn { get; private set; }
 
         private string map;
 
@@ -32,32 +34,45 @@ namespace EnemyFortress.GroundMap
 
             while (!sr.EndOfStream)
             {
-                string line = sr.ReadLine();        // one line
-                string[] split = line.Split('|');   // separate the data
-                int x = 0, y = 0, posx = 0, posy = 0, srcx = 0, srcy = 0;   // converts the data into integers
-                // Process data
-                for(int i = 1; i < split.Length; i++)
+                string[] split = sr.ReadLine().Split('|');   // separate the data
+                int posx = 0, posy = 0;
+                switch (split[0])
                 {
-                    if (string.IsNullOrWhiteSpace(split[i]))
-                        continue;
-                    string[] xy = split[i].Split('-');
-                    switch (i)
-                    {
-                        case 1:
-                            x = int.Parse(xy[0]);
-                            y = int.Parse(xy[1]);
-                            break;
-                        case 2:
-                            posx = int.Parse(xy[0]);
-                            posy = int.Parse(xy[1]);
-                            break;
-                        case 3:
-                            srcx = int.Parse(xy[0]);
-                            srcy = int.Parse(xy[1]);
-                            break;
-                    }
+                    case "spawn":
+                        //int team = 0; Will be implemented later
+                        //string teamName;
+                        Spawn = new Vector2(int.Parse(split[3]), int.Parse(split[4]));
+
+                        break;
+                    case "map":
+                        int x = 0, y = 0, srcx = 0, srcy = 0;   // converts the data into integers
+                                                                                    // Process data
+                        for (int i = 1; i < split.Length; i++)
+                        {
+                            if (string.IsNullOrWhiteSpace(split[i]))
+                                continue;
+                            string[] xy = split[i].Split('-');
+                            switch (i)
+                            {
+                                case 1:
+                                    x = int.Parse(xy[0]);
+                                    y = int.Parse(xy[1]);
+                                    break;
+                                case 2:
+                                    posx = int.Parse(xy[0]);
+                                    posy = int.Parse(xy[1]);
+                                    break;
+                                case 3:
+                                    srcx = int.Parse(xy[0]);
+                                    srcy = int.Parse(xy[1]);
+                                    break;
+                            }
+                        }
+                        tile[y, x] = new Tile(posx, posy, srcx, srcy);
+                        break;
+                    default:
+                        break;
                 }
-                tile[y, x] = new Tile(posx, posy, srcx, srcy);
             }
             sr.Dispose();
         }

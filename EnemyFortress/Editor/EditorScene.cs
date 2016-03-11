@@ -1,4 +1,5 @@
-﻿using EnemyFortress.MenuSystem.Menus;
+﻿using EnemyFortress.Forms;
+using EnemyFortress.MenuSystem.Menus;
 using EnemyFortress.SceneSystem.Base;
 using EnemyFortress.Utilities;
 using Microsoft.Xna.Framework;
@@ -14,14 +15,14 @@ namespace EnemyFortress.Editor
     /// Helper class for level editor
     /// Basically represents the object you place into the world
     /// </summary>
-    class CurrentObject : GameObject
+    class MapTool : GameObject
     {
         int xTiles;
         int yTiles;
         int maxTiles;
         int currentTile;
 
-        public CurrentObject() : base(AssetManager.Tilesheet)
+        public MapTool() : base(AssetManager.Tilesheet)
         {
             sourceRect = new Rectangle(0, 0, 128, 128);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
@@ -54,6 +55,39 @@ namespace EnemyFortress.Editor
     }
 
     /// <summary>
+    /// Spawn object for placing spawn points into map
+    /// </summary>
+    class SpawnTool : GameObject
+    {
+        public int Team { get; set; }
+        public string TeamName { get; set; }
+
+        public SpawnTool() : base(AssetManager.Spawn)
+        {
+            width = texture.Width;
+            height = texture.Height;
+            sourceRect = new Rectangle(0, 0, width, height);
+            origin = new Vector2(width / 2, height / 2);
+        }
+    }
+
+    /// <summary>
+    /// Tool for deleting objects within the editor
+    /// </summary>
+    class DeleteTool : GameObject
+    {
+
+        public DeleteTool() : base(AssetManager.Eraser)
+        {
+            width = texture.Width;
+            height = texture.Height;
+            sourceRect = new Rectangle(0, 0, width, height);
+            origin = new Vector2(width / 2, height / 2);
+            scale = 0.3f;
+        }
+    }
+
+    /// <summary>
     /// EditorScene created by Zarokhan
     /// 
     /// Keys
@@ -64,24 +98,119 @@ namespace EnemyFortress.Editor
     /// </summary>
     class EditorScene : Scene
     {
+        private EditorForm form;
         private Vector2 mouse;
-        private CurrentObject current;
+        private GameObject currentTool;
         private GameObject[,] map;
+        private List<GameObject> objList;
         private List<string> lines;
 
         private bool showLines;
 
         public EditorScene() : base()
         {
-            current = new CurrentObject();
+            currentTool = new MapTool();
             map = new GameObject[100,100];
+            objList = new List<GameObject>();
+            form = new EditorForm(this);
+            form.Show();
             showLines = true;
+        }
+
+        /// <summary>
+        /// Activates spawn placement
+        /// </summary>
+        public void SpawnPlacement()
+        {
+            currentTool = new SpawnTool();
+        }
+
+        /// <summary>
+        /// Activates map placement
+        /// </summary>
+        public void MapPlacement()
+        {
+            currentTool = new MapTool();
+        }
+
+        /// <summary>
+        /// Activates the delete tool
+        /// </summary>
+        public void DeleteTool()
+        {
+            currentTool = new DeleteTool();
+        }
+
+        /// <summary>
+        /// Toggles between showing lines
+        /// </summary>
+        public void ToggleLines()
+        {
+            showLines = !showLines;
+        }
+
+        /// <summary>
+        /// Loads map from file
+        /// </summary>
+        public void LoadMap()
+        {
+            OpenFileDialog dialog = new OpenFileDialog(); // Fixa: Enabrt .map filformat
+            dialog.Filter = "EnemyFortress Map | *.efmap";
+            dialog.DefaultExt = "efmap";
+            DialogResult result = dialog.ShowDialog();
+
+            if (result == DialogResult.Cancel)
+                return;
+            if (result == DialogResult.OK)
+            {
+                map = new GameObject[100, 100];
+                objList.Clear();
+                StreamReader reader = new StreamReader(dialog.FileName);
+                while (!reader.EndOfStream)
+                {
+                    string[] data = reader.ReadLine().Split('|');
+                    switch (data[0])
+                    {
+                        case "map":
+                            int x = 0, y = 0, posx = 0, posy = 0, srcx = 0, srcy = 0;   // converts the data into integers
+                            for (int i = 1; i < data.Length; i++)
+                            {
+                                if (string.IsNullOrWhiteSpace(data[i]))
+                                    continue;
+                                string[] xy = data[i].Split('-');
+                                switch (i)
+                                {
+                                    case 1:
+                                        x = int.Parse(xy[0]);
+                                        y = int.Parse(xy[1]);
+                                        break;
+                                    case 2:
+                                        posx = int.Parse(xy[0]);
+                                        posy = int.Parse(xy[1]);
+                                        break;
+                                    case 3:
+                                        srcx = int.Parse(xy[0]);
+                                        srcy = int.Parse(xy[1]);
+                                        break;
+                                }
+                            }
+                            GameObject obj = new GameObject(AssetManager.Tilesheet);
+                            obj.width = 128;
+                            obj.height = 128;
+                            obj.position = new Vector2(posx, posy);
+                            obj.origin = new Vector2(128 / 2, 128 / 2);
+                            obj.sourceRect = new Rectangle(srcx, srcy, 128, 128);
+                            map[y, x] = obj;
+                            break;
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Saves the map to selected path
         /// </summary>
-        private void SaveMap()
+        public void SaveMap()
         {
             SaveFileDialog dialog = new SaveFileDialog(); // Fixa: Enabrt .map filformat
             dialog.Filter = "EnemyFortress Map | *.efmap";
@@ -109,6 +238,7 @@ namespace EnemyFortress.Editor
         private void ProcessMap()
         {
             lines = new List<string>();
+            // Process game map
             for(int y = 0; y < map.GetLength(1); y++)
             {
                 for(int x = 0; x < map.GetLength(0); x++)
@@ -117,7 +247,17 @@ namespace EnemyFortress.Editor
                         continue;
 
                     GameObject obj = map[y, x];
-                    string line = "obj|" + x + "-" + y + "|" + obj.position.X + "-" + obj.position.Y + "|" + obj.sourceRect.X + "-" + obj.sourceRect.Y + "|";
+                    string line = "map|" + x + "-" + y + "|" + obj.position.X + "-" + obj.position.Y + "|" + obj.sourceRect.X + "-" + obj.sourceRect.Y + "|";
+                    lines.Add(line);
+                }
+            }
+            // Process game objects
+            for(int i = 0; i < objList.Count; i++)
+            {
+                if(objList[i] is SpawnTool)
+                {
+                    SpawnTool obj = (SpawnTool)objList[i];
+                    string line = "spawn|" + obj.Team + "|" + obj.TeamName + "|" + (int)obj.position.X + "|" + (int)obj.position.Y + "|";
                     lines.Add(line);
                 }
             }
@@ -135,12 +275,21 @@ namespace EnemyFortress.Editor
                 return;
 
             map[y, x] = null;
+            
+            for(int i = 0; i < objList.Count; i++)  // Needs to be refined
+            {
+                if(objList[i].GetRect().Intersects(currentTool.GetRect()))
+                {
+                    objList.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         /// <summary>
-        /// Sets current object into the game world
+        /// Sets current object into the game world and snaps it
         /// </summary>
-        private void SetObject()
+        private void SetMapObject()
         {
             int x = (int)((mouse.X) / 128);
             int y = (int)((mouse.Y) / 128);
@@ -149,7 +298,7 @@ namespace EnemyFortress.Editor
                 return;
 
             GameObject obj = new GameObject(AssetManager.Tilesheet);
-            obj.sourceRect = new Rectangle(current.sourceRect.X, current.sourceRect.Y, current.sourceRect.Width, current.sourceRect.Height);
+            obj.sourceRect = new Rectangle(currentTool.sourceRect.X, currentTool.sourceRect.Y, currentTool.sourceRect.Width, currentTool.sourceRect.Height);
             obj.width = obj.sourceRect.Width;
             obj.height = obj.sourceRect.Height;
             obj.origin = new Vector2(obj.width / 2, obj.height / 2);
@@ -158,29 +307,54 @@ namespace EnemyFortress.Editor
             map[y, x] = obj;
         }
 
+        /// <summary>
+        /// Adds spawn object into the world
+        /// </summary>
+        private void AddSpawnObject()
+        {
+
+
+            if (objList.Count != 0 && (int)objList[objList.Count - 1].position.X == (int)mouse.X && (int)objList[objList.Count - 1].position.Y == (int)mouse.Y)
+                return;
+
+            SpawnTool obj = new SpawnTool();
+            obj.position = new Vector2((int)mouse.X, (int)mouse.Y);
+            objList.Add(obj);
+        }
+
         public override void Update(GameTime gameTime, bool otherSceneHasFocus, bool coveredByOtherScene)
         {
             base.Update(gameTime, otherSceneHasFocus, coveredByOtherScene);
-            current.position.X = mouse.X;
-            current.position.Y = mouse.Y;
-
-            // Save map
-            if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.Space))
-                SaveMap();
+            currentTool.position.X = mouse.X;
+            currentTool.position.Y = mouse.Y;
 
             // Add object
             if (Input.LeftButtonClicked())
-                SetObject();
-
-            // Delete object
-            if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.Back))
-                DeleteObject();
+            {
+                if(currentTool is MapTool)
+                {
+                    SetMapObject();
+                }
+                if(currentTool is DeleteTool)
+                {
+                    DeleteObject();
+                }
+                if(currentTool is SpawnTool)
+                {
+                    AddSpawnObject();
+                }
+            }
 
             // Next tile
-            if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.Q))
-                current.NextTile(1);
-            else if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.W))
-                current.NextTile(-1);
+            if(currentTool is MapTool)
+            {
+                MapTool temp = (MapTool)currentTool;
+
+                if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.Q))
+                    temp.NextTile(1);
+                else if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.W))
+                    temp.NextTile(-1);
+            }
 
             // Camera Position
             if (Input.HoldingKey(Microsoft.Xna.Framework.Input.Keys.Left))
@@ -206,7 +380,11 @@ namespace EnemyFortress.Editor
 
             if (showLines)
                 DrawLines(batch);
-            current.Draw(batch);
+
+            for (int i = 0; i < objList.Count; i++)
+                objList[i].Draw(batch);
+
+            currentTool.Draw(batch);
             batch.End();
         }
 

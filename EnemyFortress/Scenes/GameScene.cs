@@ -22,10 +22,12 @@ namespace EnemyFortress.Scenes
     {
         public List<Tank> remoteTanks { get; private set; }
         public bool DrawPing { get; set; }
+        public bool DrawUserList { get; set; }
 
         private Client client;          // Client information
         private Thread listenerThread;  // Listens for incomming traffic
 
+        private List<GameObject> objList;
         private TileMap map;
         private Tank tank;
 
@@ -34,12 +36,14 @@ namespace EnemyFortress.Scenes
             this.client = client;
             client.GameScene = this;
             remoteTanks = new List<Tank>();
-            map = new TileMap("map");
+            objList = new List<GameObject>();
+            map = new TileMap("master2");
 
             listenerThread = new Thread(client.HoldConnection);
             listenerThread.Start();
 
             DrawPing = false;
+            DrawUserList = false;
         }
 
         /// <summary>
@@ -61,9 +65,10 @@ namespace EnemyFortress.Scenes
         /// </summary>
         /// <param name="x">x coordinate</param>
         /// <param name="y">y coordinate</param>
-        public void SpawnClientTank(int x, int y)
+        public void SpawnClientTank(int x = 0, int y = 0)
         {
             tank = new Tank(x, y);
+            tank.position = new Vector2(map.Spawn.X, map.Spawn.Y);
             tank.SetControl(new ClientControl(client, tank));
         }
 
@@ -106,6 +111,9 @@ namespace EnemyFortress.Scenes
 
         public override void Draw()
         {
+            if (tank == null)
+                return;
+
             // Draws Game
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
             map.Draw(batch);
@@ -113,11 +121,11 @@ namespace EnemyFortress.Scenes
             for (int i = 0; i < remoteTanks.Count; i++)
                 remoteTanks[i].Draw(batch);
 
-            if (tank != null)
-                tank.Draw(batch);
+            tank.Draw(batch);
             batch.End();
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, hudCamera.Transform);
-            DrawPlayerList(batch);
+            if (DrawUserList)
+                DrawPlayerList(batch);
             batch.End();
         }
 

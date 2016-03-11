@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="197544">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="203176">
       <assemblyIdentity name="EnemyFortress" version="3.4.0.456" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7RnSLyxvDRLkDbGOUEUqtfMyz/Y=</dsig:DigestValue>
+        <dsig:DigestValue>GtyJqPXNN9WjzwKMl3fUD6hVLxg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>i9adw9QKDc9YdCFlcdT2xxrU1W0=</dsig:DigestValue>
+        <dsig:DigestValue>JPhGFR3wruUcMFWaYs+x5gwk3K0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -106,6 +106,42 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>NGaXkKDl38hpTNbbCPs5YIqgFXo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\eraser.png" size="40551">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>92AFCErM5wCLvAuHgXFf0fXa4qA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\master.efmap" size="8813">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>G7S8tjj7Aqsq8GzyOK2g11CKVXA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\master2.efmap" size="8832">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>FzWwhxKnuKbmBNERpyDirzGZEYg=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\spawn.png" size="10378">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>1pVzaPbZlCkFLuQAghMbQx72xKQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Spritefont.spritefont" size="2068">

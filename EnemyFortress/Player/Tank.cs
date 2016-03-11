@@ -52,20 +52,20 @@ namespace EnemyFortress.Player
         public void TurnRight(GameTime gameTime, float val = 1)
         {
             this.rotation += MathHelper.ToRadians(rotation_speed) * val * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.rotation = this.rotation % MathHelper.ToRadians(360);
-            this.rotation = this.rotation % MathHelper.ToRadians(-360);
         }
 
         public void Update(Vector2 position)
         {
             this.position.X = position.X;
             this.position.Y = position.Y;
+            this.rotation = this.rotation % MathHelper.ToRadians(360);
+            this.rotation = this.rotation % MathHelper.ToRadians(-360);
         }
     }
 
     class Tank : GameObject
     {
-        public const float START_SCALE = 0.15f;
+        public const float START_SCALE = 0.12f;
 
         public Control Control { get; private set; }
         public TankGun Gun { get; private set; }
@@ -87,8 +87,8 @@ namespace EnemyFortress.Player
 
             scale = START_SCALE;
 
-            speed = 130f;
-            rotation_speed = 90f;
+            speed = 200f;
+            rotation_speed = 120f;
         }
 
         /// <summary>

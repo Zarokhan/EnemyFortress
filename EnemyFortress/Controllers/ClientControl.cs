@@ -14,8 +14,7 @@ namespace EnemyFortress.Controllers
     class ClientControl : Control
     {
         public Vector2 Mouse { get; set; }
-        // Latency & Ping
-        private float latencyUpdateTimer;
+        private float latencyUpdateTimer;   // Latency & Ping
 
         public ClientControl(Client client, Tank tank) : base(client, tank) { Mouse = new Vector2(); }
 

@@ -61,7 +61,9 @@ namespace EnemyFortress
             if (Input.ClickedKey(Keys.Escape))
                 Exit();
 
-            Input.Update();
+            if (this.IsActive)
+                Input.Update();
+
             SceneManager.Update(gameTime);
 
             base.Update(gameTime);
