@@ -7,14 +7,14 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="EnemyFortress.exe.manifest" size="10383">
+    <dependentAssembly dependencyType="install" codebase="EnemyFortress.exe.manifest" size="10002">
       <assemblyIdentity name="EnemyFortress.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>OAK6nwvCB6IxZ+DBI/rejPt6ROg=</dsig:DigestValue>
+        <dsig:DigestValue>oYJZ22/FI0/7+pe2q8w370MHoB0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

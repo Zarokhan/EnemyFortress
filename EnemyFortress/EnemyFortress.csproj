@@ -93,6 +93,12 @@
     <Compile Include="Forms\EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SpawnForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SpawnForm.Designer.cs">
+      <DependentUpon>SpawnForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GroundMap\Tile.cs" />
     <Compile Include="GroundMap\TileMap.cs" />
     <Compile Include="MenuSystem\Base\MenuEntry.cs" />
@@ -156,6 +162,9 @@
     <EmbeddedResource Include="Forms\EditorForm.resx">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SpawnForm.resx">
+      <DependentUpon>SpawnForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Spritefont.mgcb">
@@ -170,6 +179,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\master2.efmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\master3.efmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="EnemyFortress_TemporaryKey.pfx" />

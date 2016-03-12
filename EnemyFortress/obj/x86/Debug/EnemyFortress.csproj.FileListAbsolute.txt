@@ -25,3 +25,5 @@ E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.Forms.EditorForm.
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\spawn.png
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\eraser.png
 E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\master2.efmap
+E:\git\EnemyFortress\EnemyFortress\obj\x86\Debug\EnemyFortress.Forms.SpawnForm.resources
+E:\git\EnemyFortress\EnemyFortress\bin\WindowsGL\Debug\Content\master3.efmap

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="203176">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnemyFortress.exe" size="206248">
       <assemblyIdentity name="EnemyFortress" version="3.4.0.456" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>GtyJqPXNN9WjzwKMl3fUD6hVLxg=</dsig:DigestValue>
+        <dsig:DigestValue>5Htqg5ZilBS1DgNEoU77G5JzDyw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>JPhGFR3wruUcMFWaYs+x5gwk3K0=</dsig:DigestValue>
+        <dsig:DigestValue>3VnLDSYEoSB2OKBUgquAzmfO2CE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -133,6 +133,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>FzWwhxKnuKbmBNERpyDirzGZEYg=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\master3.efmap" size="8919">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>ALZ/YvyQ5OFIUAuIv31T7f22V08=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\spawn.png" size="10378">

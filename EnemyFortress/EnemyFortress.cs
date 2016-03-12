@@ -62,7 +62,12 @@ namespace EnemyFortress
                 Exit();
 
             if (this.IsActive)
+            {
+                Input.Enable();
                 Input.Update();
+            }
+            else
+                Input.Disable();
 
             SceneManager.Update(gameTime);
 

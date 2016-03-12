@@ -15,14 +15,14 @@ namespace EnemyFortress.Editor
     /// Helper class for level editor
     /// Basically represents the object you place into the world
     /// </summary>
-    class MapTool : GameObject
+    class MapObj : GameObject
     {
         int xTiles;
         int yTiles;
         int maxTiles;
         int currentTile;
 
-        public MapTool() : base(AssetManager.Tilesheet)
+        public MapObj() : base(AssetManager.Tilesheet)
         {
             sourceRect = new Rectangle(0, 0, 128, 128);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
@@ -57,12 +57,12 @@ namespace EnemyFortress.Editor
     /// <summary>
     /// Spawn object for placing spawn points into map
     /// </summary>
-    class SpawnTool : GameObject
+    class SpawnObj : GameObject
     {
-        public int Team { get; set; }
+        public int TeamID { get; set; }
         public string TeamName { get; set; }
 
-        public SpawnTool() : base(AssetManager.Spawn)
+        public SpawnObj() : base(AssetManager.Spawn)
         {
             width = texture.Width;
             height = texture.Height;
@@ -76,7 +76,6 @@ namespace EnemyFortress.Editor
     /// </summary>
     class DeleteTool : GameObject
     {
-
         public DeleteTool() : base(AssetManager.Eraser)
         {
             width = texture.Width;
@@ -93,8 +92,6 @@ namespace EnemyFortress.Editor
     /// Keys
     /// Q: Prev tile
     /// W: Next tile
-    /// Back: Delete tile
-    /// Space: Save tile
     /// </summary>
     class EditorScene : Scene
     {
@@ -102,16 +99,18 @@ namespace EnemyFortress.Editor
         private Vector2 mouse;
         private GameObject currentTool;
         private GameObject[,] map;
-        private List<GameObject> objList;
         private List<string> lines;
+        private List<GameObject> objList;
+        public List<SpawnObj> spawnList { get; private set; }
 
         private bool showLines;
 
         public EditorScene() : base()
         {
-            currentTool = new MapTool();
+            currentTool = new MapObj();
             map = new GameObject[100,100];
             objList = new List<GameObject>();
+            spawnList = new List<SpawnObj>();
             form = new EditorForm(this);
             form.Show();
             showLines = true;
@@ -122,7 +121,7 @@ namespace EnemyFortress.Editor
         /// </summary>
         public void SpawnPlacement()
         {
-            currentTool = new SpawnTool();
+            currentTool = new SpawnObj();
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace EnemyFortress.Editor
         /// </summary>
         public void MapPlacement()
         {
-            currentTool = new MapTool();
+            currentTool = new MapObj();
         }
 
         /// <summary>
@@ -154,7 +153,7 @@ namespace EnemyFortress.Editor
         /// </summary>
         public void LoadMap()
         {
-            OpenFileDialog dialog = new OpenFileDialog(); // Fixa: Enabrt .map filformat
+            OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "EnemyFortress Map | *.efmap";
             dialog.DefaultExt = "efmap";
             DialogResult result = dialog.ShowDialog();
@@ -169,10 +168,23 @@ namespace EnemyFortress.Editor
                 while (!reader.EndOfStream)
                 {
                     string[] data = reader.ReadLine().Split('|');
+                    int posx = 0, posy = 0;
                     switch (data[0])
                     {
+                        case "spawn":
+                            int teamid = int.Parse(data[1]);
+                            string teamname = data[2];
+                            posx = int.Parse(data[3]);
+                            posy = int.Parse(data[4]);
+                            SpawnObj obj1 = new SpawnObj();
+                            obj1.TeamID = teamid;
+                            obj1.TeamName = teamname;
+                            obj1.position = new Vector2(posx, posy);
+                            objList.Add(obj1);
+                            spawnList.Add(obj1);
+                            break;
                         case "map":
-                            int x = 0, y = 0, posx = 0, posy = 0, srcx = 0, srcy = 0;   // converts the data into integers
+                            int x = 0, y = 0, srcx = 0, srcy = 0;   // converts the data into integers
                             for (int i = 1; i < data.Length; i++)
                             {
                                 if (string.IsNullOrWhiteSpace(data[i]))
@@ -221,9 +233,18 @@ namespace EnemyFortress.Editor
                 return;
             if (result == DialogResult.OK)
             {
-                ProcessMap();
                 string path = dialog.FileName;
-                StreamWriter writer = new StreamWriter(path);
+                StreamWriter writer = null;
+                try
+                {
+                    writer = new StreamWriter(path);
+                }
+                catch (System.Exception)
+                {
+                    return;
+                }
+                ProcessMap();
+
                 foreach (string line in lines)
                 {
                     writer.WriteLine(line);
@@ -254,10 +275,10 @@ namespace EnemyFortress.Editor
             // Process game objects
             for(int i = 0; i < objList.Count; i++)
             {
-                if(objList[i] is SpawnTool)
+                if(objList[i] is SpawnObj)
                 {
-                    SpawnTool obj = (SpawnTool)objList[i];
-                    string line = "spawn|" + obj.Team + "|" + obj.TeamName + "|" + (int)obj.position.X + "|" + (int)obj.position.Y + "|";
+                    SpawnObj obj = (SpawnObj)objList[i];
+                    string line = "spawn|" + obj.TeamID + "|" + obj.TeamName + "|" + (int)obj.position.X + "|" + (int)obj.position.Y + "|";
                     lines.Add(line);
                 }
             }
@@ -273,8 +294,6 @@ namespace EnemyFortress.Editor
 
             if (x < 0 || y < 0)
                 return;
-
-            map[y, x] = null;
             
             for(int i = 0; i < objList.Count; i++)  // Needs to be refined
             {
@@ -284,6 +303,8 @@ namespace EnemyFortress.Editor
                     return;
                 }
             }
+
+            map[y, x] = null;
         }
 
         /// <summary>
@@ -312,14 +333,24 @@ namespace EnemyFortress.Editor
         /// </summary>
         private void AddSpawnObject()
         {
+            if (mouse.X < 0 || mouse.Y < 0)
+                return;
 
+            SpawnForm form = new SpawnForm(this);
+            DialogResult result = form.ShowDialog();
+
+            if (result == DialogResult.Cancel)
+                return;
 
             if (objList.Count != 0 && (int)objList[objList.Count - 1].position.X == (int)mouse.X && (int)objList[objList.Count - 1].position.Y == (int)mouse.Y)
                 return;
 
-            SpawnTool obj = new SpawnTool();
+            SpawnObj obj = new SpawnObj();
+            obj.TeamName = form.teamName;
+            obj.TeamID = spawnList.Count;
             obj.position = new Vector2((int)mouse.X, (int)mouse.Y);
             objList.Add(obj);
+            spawnList.Add(obj);
         }
 
         public override void Update(GameTime gameTime, bool otherSceneHasFocus, bool coveredByOtherScene)
@@ -331,7 +362,7 @@ namespace EnemyFortress.Editor
             // Add object
             if (Input.LeftButtonClicked())
             {
-                if(currentTool is MapTool)
+                if(currentTool is MapObj)
                 {
                     SetMapObject();
                 }
@@ -339,16 +370,16 @@ namespace EnemyFortress.Editor
                 {
                     DeleteObject();
                 }
-                if(currentTool is SpawnTool)
+                if(currentTool is SpawnObj)
                 {
                     AddSpawnObject();
                 }
             }
 
             // Next tile
-            if(currentTool is MapTool)
+            if(currentTool is MapObj)
             {
-                MapTool temp = (MapTool)currentTool;
+                MapObj temp = (MapObj)currentTool;
 
                 if (Input.ClickedKey(Microsoft.Xna.Framework.Input.Keys.Q))
                     temp.NextTile(1);

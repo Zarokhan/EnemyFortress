@@ -1,13 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Utilities;
 
 namespace EnemyFortressServer
 {
+    class Point
+    {
+        int x;
+        int y;
+
+        public Point() { x = 0; y = 0; }
+        public Point(int x, int y) { this.x = x; this.y = y; }
+    }
+
+    class Team
+    {
+        public int TeamID;
+        public string TeamName;
+        public List<Point> Spawns;
+    }
+
     /// <summary>
     /// Server for game
     /// </summary>
@@ -17,6 +35,7 @@ namespace EnemyFortressServer
 
         private TcpListener listener;       // Listens for incomming traffic
         public List<Client> clients { get; private set; }       // List of all active clients
+        public List<Team> teams { get; private set; }
 
         private Thread connectionThread;        // Connection thread
         private Thread disconnectionThread;     // Disconnection thread
@@ -35,6 +54,52 @@ namespace EnemyFortressServer
 
             running = true;
             mylock = new object();
+            teams = new List<Team>();
+            ProcessMap();
+        }
+
+        private void ProcessMap()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "EnemyFortress Map | *.efmap";
+            dialog.DefaultExt = "efmap";
+            DialogResult result = dialog.ShowDialog();
+
+            if (result == DialogResult.Cancel)
+                return;
+            if (result == DialogResult.OK)
+            {
+                StreamReader reader = new StreamReader(dialog.FileName);
+                while (!reader.EndOfStream)
+                {
+                    string[] data = reader.ReadLine().Split('|');
+                    int posx = 0, posy = 0;
+                    switch (data[0])
+                    {
+                        case "spawn":
+                            int teamid = int.Parse(data[1]);
+                            string teamname = data[2];
+                            posx = int.Parse(data[3]);
+                            posy = int.Parse(data[4]);
+
+                            // Check if teamname already exist
+                            for (int i = 0; i < teams.Count; i++)
+                            {
+                                if(teamname == teams[i].TeamName)
+                                {
+                                    teams[i].Spawns.Add(new Point(posx, posy));
+                                }
+                            }
+
+                            Team team = new Team();
+                            team.TeamID = teamid;
+                            team.TeamName = teamname;
+                            team.Spawns.Add(new Point(posx, posy));
+                            teams.Add(team);
+                            break;
+                    }
+                }
+            }
         }
 
         /// <summary>
