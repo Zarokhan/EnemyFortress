@@ -79,7 +79,7 @@
     <Compile Include="Control.cs" />
     <Compile Include="Controllers\ClientControl.cs" />
     <Compile Include="Controllers\RemoteControl.cs" />
-    <Compile Include="Editor\EditorScene.cs" />
+    <Compile Include="Scenes\EditorScene.cs" />
     <Compile Include="EnemyFortress.cs" />
     <Compile Include="Forms\ConnectForm.cs">
       <SubType>Form</SubType>

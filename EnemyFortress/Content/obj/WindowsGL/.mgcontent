@@ -4,6 +4,6 @@
   <Platform>WindowsGL</Platform>
   <Config />
   <SourceFiles>
-    <File>E:/git/EnemyFortress/EnemyFortress/Content/Spritefont.spritefont</File>
+    <File>C:/Git/EnemyFortress/EnemyFortress/Content/Spritefont.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

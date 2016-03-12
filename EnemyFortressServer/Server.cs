@@ -6,25 +6,11 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EnemyFortressServer.Utilities;
 using Utilities;
 
 namespace EnemyFortressServer
 {
-    class Point
-    {
-        int x;
-        int y;
-
-        public Point() { x = 0; y = 0; }
-        public Point(int x, int y) { this.x = x; this.y = y; }
-    }
-
-    class Team
-    {
-        public int TeamID;
-        public string TeamName;
-        public List<Point> Spawns;
-    }
 
     /// <summary>
     /// Server for game
@@ -58,6 +44,22 @@ namespace EnemyFortressServer
             ProcessMap();
         }
 
+        /// <summary>
+        /// Makes client join a team
+        /// </summary>
+        public Team TeamClient(Client client)
+        {
+            Team team = teams[0];   // Takes firts team
+
+            for(int i = 0; i < teams.Count; i++)    // Goes thru all teams
+            {
+                if (team.members > teams[i].members)    // check if current refrence has the least amount of members
+                    team = teams[i];
+            }
+            team.members++;
+            return team;
+        }
+
         private void ProcessMap()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -85,16 +87,16 @@ namespace EnemyFortressServer
                             // Check if teamname already exist
                             for (int i = 0; i < teams.Count; i++)
                             {
-                                if(teamname == teams[i].TeamName)
+                                if(teamname == teams[i].teamName)
                                 {
-                                    teams[i].Spawns.Add(new Point(posx, posy));
+                                    teams[i].spawns.Add(new Point(posx, posy));
                                 }
                             }
 
                             Team team = new Team();
-                            team.TeamID = teamid;
-                            team.TeamName = teamname;
-                            team.Spawns.Add(new Point(posx, posy));
+                            team.teamID = teamid;
+                            team.teamName = teamname;
+                            team.spawns.Add(new Point(posx, posy));
                             teams.Add(team);
                             break;
                     }

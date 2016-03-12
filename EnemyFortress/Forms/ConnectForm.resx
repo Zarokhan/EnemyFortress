@@ -193,7 +193,7 @@
     <value>3</value>
   </data>
   <data name="IPtextBox.Text" xml:space="preserve">
-    <value>anunrealgroup.ddns.net</value>
+    <value>127.0.0.1</value>
   </data>
   <data name="&gt;&gt;IPtextBox.Name" xml:space="preserve">
     <value>IPtextBox</value>

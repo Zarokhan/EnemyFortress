@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using EnemyFortressServer.Utilities;
 using Utilities;
 
 namespace EnemyFortressServer
@@ -23,6 +24,8 @@ namespace EnemyFortressServer
         float gun_rotation;
         float latency;
         int ping;
+
+        private Team team;
 
         private Server parent;
         private NetworkStream stream;                                 // Network stream used for reading / writing data to / from client.
@@ -55,10 +58,8 @@ namespace EnemyFortressServer
             WriteMessage(Commands.Send(Command.SendID, id));
 
             // Spawns client into world
-            Random rnd = new Random(DateTime.Now.Second);
-            x = rnd.Next(1280);
-            y = rnd.Next(720);
-            WriteMessage(Commands.Send(Command.Spawn, x + "|" + y));
+            team = parent.TeamClient(this);
+            WriteMessage(Commands.Send(Command.Spawn, team.spawns[0].x + "|" + team.spawns[0].y));
 
             // Send all other game clients to game client
             for(int i = 0; i < parent.clients.Count; i++)
